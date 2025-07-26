@@ -4,11 +4,11 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 🕵️‍♂️ | System Security Engineer 🔒
 ---------------------------------------
 
-As principled builder, Cybersecurity and policy are too often discussed in isolation from the human experience. As a systems-level thinker, I know it’s time to reframe the conversation placing resilience, empathy ethics.
+As a principled builder, I see that cybersecurity and policy are too often discussed in isolation from the human experience. As a systems-level thinker, I believe it's time to reframe the conversation — placing resilience, empathy, and ethics at its core.
 
 *   🖥️  Check my [website](https://start.me/p/zp9jX0/xcode96).
 *   ✉️  You can contact me at [Charuxdq@gmail.com](mailto:cr.charuxdq@gmail.com).
-*   🤝  I'm open to questions and collaborate in projects.   
+*   🤝  I'm open to questions and collaborate in projects. 
 
 ### Skills
 <p align="center">
