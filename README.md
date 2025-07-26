@@ -8,8 +8,7 @@ As principled builder, Cybersecurity and policy are too often discussed in isola
 
 *   🖥️  Check my [website](https://start.me/p/zp9jX0/xcode96).
 *   ✉️  You can contact me at [Charuxdq@gmail.com](mailto:cr.charuxdq@gmail.com).
-*   🤝  I'm open to questions and collaborate in projects.
-*   
+*   🤝  I'm open to questions and collaborate in projects.   
 
 ### Skills
 <p align="center">
