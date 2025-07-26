@@ -4,7 +4,7 @@ Hi ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-912
 🕵️‍♂️ | System Security Engineer 🔒
 ---------------------------------------
 
-I’m a passionate cybersecurity professional with a focus on red teaming and penetration testing. I have knowledge in network, mobile, web, and Wi-Fi pentesting, and I leverage my knowledge in machine learning to enhance my security practices. I’m committed to staying updated with the latest technologies and tools in the field.
+As principled builder, Cybersecurity and policy are too often discussed in isolation from the human experience. As a systems-level thinker, I know it’s time to reframe the conversation placing resilience, empathy ethics.
 
 *   🖥️  Check my [website](https://start.me/p/zp9jX0/xcode96).
 *   ✉️  You can contact me at [Charuxdq@gmail.com](mailto:cr.charuxdq@gmail.com).
