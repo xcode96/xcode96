@@ -1,4 +1,4 @@
-<a href="https://xocode96.info">
+<a href="https://www.xocode.info/">
 <picture>
     <source srcset="./header-light.png" media="(prefers-color-scheme: light)">
     <source srcset="./header-dark.png" media="(prefers-color-scheme: dark)">
