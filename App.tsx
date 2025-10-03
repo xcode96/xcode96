@@ -260,18 +260,10 @@ const App: React.FC = () => {
       showToast('Thank you! Your suggestion has been submitted for review.');
   };
 
-  const handleApproveSuggestion = (suggestionId: string) => {
+  const handleApproveSuggestion = (suggestionId: string, finalToolData: Omit<Tool, 'id' | 'author'>) => {
     const suggestion = suggestions.find(s => s.suggestionId === suggestionId);
-    if (suggestion) {
-        handleAddTool({
-            name: suggestion.name,
-            description: suggestion.description,
-            link: suggestion.link,
-            imageUrl: suggestion.imageUrl,
-            category: suggestion.category,
-            tagColor: suggestion.tagColor,
-            videoUrl: suggestion.videoUrl,
-        });
+    if (suggestion && suggestion.status === 'pending') {
+        handleAddTool(finalToolData);
         setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'approved' } : s));
         showToast('Suggestion approved and tool added.', 'success');
     }

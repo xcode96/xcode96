@@ -1,7 +1,8 @@
 import React, { useState, useRef, useMemo } from 'react';
 import type { AdminUser, Tool, Category, SuggestedTool } from '../types';
-import { UserPlusIcon, LogoutIcon, UserIcon, ToolsIcon, PencilIcon, TrashIcon, DownloadIcon, UploadIcon, PlusIcon, InboxIcon, CheckCircleIcon, XCircleIcon } from './Icons';
+import { UserPlusIcon, LogoutIcon, UserIcon, ToolsIcon, PencilIcon, TrashIcon, DownloadIcon, UploadIcon, PlusIcon, InboxIcon, EyeIcon } from './Icons';
 import { ToolFormModal } from './ToolFormModal';
+import { SuggestionDetailModal } from './SuggestionDetailModal';
 
 interface AdminDashboardProps {
   users: AdminUser[];
@@ -9,7 +10,7 @@ interface AdminDashboardProps {
   onLogout: () => void;
   tools: Tool[];
   suggestions: SuggestedTool[];
-  onApproveSuggestion: (suggestionId: string) => void;
+  onApproveSuggestion: (suggestionId: string, finalToolData: Omit<Tool, 'id' | 'author'>) => void;
   onRejectSuggestion: (suggestionId: string) => void;
   categories: Category[];
   onAddTool: (tool: Omit<Tool, 'id' | 'author'>) => void;
@@ -37,6 +38,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   // Modal and workflow state
   const [isToolModalOpen, setIsToolModalOpen] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
+  const [reviewingSuggestion, setReviewingSuggestion] = useState<SuggestedTool | null>(null);
+  const [suggestionToEdit, setSuggestionToEdit] = useState<SuggestedTool | null>(null);
 
   const pendingSuggestionsCount = useMemo(() => suggestions.filter(s => s.status === 'pending').length, [suggestions]);
 
@@ -56,16 +59,42 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleOpenAddToolModal = () => {
     setEditingTool(null);
+    setSuggestionToEdit(null);
     setIsToolModalOpen(true);
   };
   
   const handleOpenEditToolModal = (tool: Tool) => {
     setEditingTool(tool);
+    setSuggestionToEdit(null);
+    setIsToolModalOpen(true);
+  };
+  
+  const handleReviewClick = (suggestion: SuggestedTool) => {
+    setReviewingSuggestion(suggestion);
+  };
+
+  const handleEditAndApprove = (suggestion: SuggestedTool) => {
+    setReviewingSuggestion(null);
+    setSuggestionToEdit(suggestion);
+    setEditingTool({ // Pre-fill form with suggestion data
+        id: '', // Not a real tool yet
+        name: suggestion.name,
+        description: suggestion.description,
+        link: suggestion.link,
+        videoUrl: suggestion.videoUrl,
+        author: { name: 'Suggested', avatarUrl: '' },
+        imageUrl: suggestion.imageUrl,
+        category: suggestion.category,
+        tagColor: suggestion.tagColor,
+    });
     setIsToolModalOpen(true);
   };
 
   const handleSaveTool = (toolData: Omit<Tool, 'id' | 'author'> | Tool) => {
-    if ('id' in toolData) {
+    if (suggestionToEdit) {
+      onApproveSuggestion(suggestionToEdit.suggestionId, toolData as Omit<Tool, 'id' | 'author'>);
+      setSuggestionToEdit(null);
+    } else if ('id' in toolData && toolData.id) {
       onEditTool(toolData as Tool);
     } else {
       onAddTool(toolData as Omit<Tool, 'id' | 'author'>);
@@ -77,6 +106,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleDeleteToolClick = (toolId: string) => {
     if (window.confirm('Are you sure you want to delete this tool?')) {
         onDeleteTool(toolId);
+    }
+  }
+
+  const handleRejectClick = (suggestionId: string) => {
+     if (window.confirm('Are you sure you want to reject this tool suggestion?')) {
+        onRejectSuggestion(suggestionId);
+        setReviewingSuggestion(null);
     }
   }
 
@@ -167,7 +203,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       {/* CONTENT */}
       {activeTab === 'users' && <UserManagementPanel users={users} onAddUserSubmit={handleAddUserSubmit} username={username} setUsername={setUsername} email={email} setEmail={setEmail} password={password} setPassword={setPassword} role={role} setRole={setRole} />}
       {activeTab === 'tools' && <ToolManagementPanel tools={tools} onAddClick={handleOpenAddToolModal} onEditClick={handleOpenEditToolModal} onDeleteClick={handleDeleteToolClick} />}
-      {activeTab === 'suggestions' && <SuggestionManagementPanel suggestions={suggestions} onApprove={onApproveSuggestion} onReject={onRejectSuggestion} />}
+      {activeTab === 'suggestions' && <SuggestionManagementPanel suggestions={suggestions} onReview={handleReviewClick} />}
     
       {isToolModalOpen && (
         <ToolFormModal 
@@ -176,6 +212,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             onSave={handleSaveTool}
             tool={editingTool}
             categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
+        />
+      )}
+      {reviewingSuggestion && (
+        <SuggestionDetailModal
+            isOpen={!!reviewingSuggestion}
+            onClose={() => setReviewingSuggestion(null)}
+            suggestion={reviewingSuggestion}
+            onEditAndApprove={handleEditAndApprove}
+            onReject={handleRejectClick}
         />
       )}
     </div>
@@ -302,20 +347,8 @@ const ToolManagementPanel = ({ tools, onAddClick, onEditClick, onDeleteClick }) 
 );
 
 // Suggestion Management Panel Component
-const SuggestionManagementPanel = ({ suggestions, onApprove, onReject }) => {
+const SuggestionManagementPanel = ({ suggestions, onReview }: { suggestions: SuggestedTool[], onReview: (suggestion: SuggestedTool) => void }) => {
     const pendingSuggestions = suggestions.filter(s => s.status === 'pending');
-
-    const handleApproveClick = (suggestionId: string) => {
-        if (window.confirm('Are you sure you want to approve this tool suggestion? It will be added to the public list.')) {
-            onApprove(suggestionId);
-        }
-    };
-
-    const handleRejectClick = (suggestionId: string) => {
-        if (window.confirm('Are you sure you want to reject this tool suggestion?')) {
-            onReject(suggestionId);
-        }
-    };
 
     return (
         <div className="bg-white border border-gray-200 rounded-xl animate-fade-in">
@@ -345,11 +378,8 @@ const SuggestionManagementPanel = ({ suggestions, onApprove, onReject }) => {
                                         </a>
                                     </td>
                                     <td className="px-6 py-4 text-right space-x-2">
-                                        <button onClick={() => handleApproveClick(suggestion.suggestionId)} className="flex items-center gap-1.5 bg-green-600 text-white hover:bg-green-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
-                                            <CheckCircleIcon className="w-4 h-4" /> Approve
-                                        </button>
-                                        <button onClick={() => handleRejectClick(suggestion.suggestionId)} className="flex items-center gap-1.5 bg-red-600 text-white hover:bg-red-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
-                                            <XCircleIcon className="w-4 h-4" /> Reject
+                                        <button onClick={() => onReview(suggestion)} className="flex items-center gap-1.5 bg-indigo-600 text-white hover:bg-indigo-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
+                                            <EyeIcon className="w-4 h-4" /> Review
                                         </button>
                                     </td>
                                 </tr>
