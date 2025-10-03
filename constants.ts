@@ -42,7 +42,9 @@ export const initialTools: Tool[] = [
     name: 'Mangle',
     description: 'A tool that manipulates aspects of compiled executables (exe or DLL). Mangle can remove known Indicators of Compromise (IoC) based strings and replace them with random characters, change the file by inflating the size to avoid EDRs, and can clone code-signing certs from legitimate files. In doing so, Mangle...',
     link: '#',
-    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    // NOTE: The native Picture-in-Picture API requires a direct link to a video file (.mp4, .webm, etc.).
+    // Standard YouTube "watch" links will not work. This URL is a placeholder for demonstration.
+    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     author: { name: 'João Paulo de Andrade Filho', avatarUrl: 'https://picsum.photos/seed/jp/32/32' },
     imageUrl: 'https://i.imgur.com/kYmO3P3.png',
     category: 'Persistence Techniques',

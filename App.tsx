@@ -7,6 +7,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { Pagination } from './components/Pagination';
 import { SuggestionModal } from './components/SuggestionModal';
 import { Toast } from './components/Toast';
+import { PipPlayer } from './components/PipPlayer';
 import { initialTools, categories as baseCategories } from './constants';
 import type { Tool, AdminUser, SuggestedTool, Theme } from './types';
 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [pipVideoUrl, setPipVideoUrl] = useState<string | null>(null);
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
       const storedTheme = window.localStorage.getItem('theme') as Theme;
@@ -314,6 +316,7 @@ const App: React.FC = () => {
                     isFavorite={favorites.includes(tool.id)}
                     onToggleFavorite={toggleFavorite}
                     onRatingRequest={() => showToast('Your rating request has been submitted to the admins.')}
+                    onPlayVideoInPip={(url) => setPipVideoUrl(url)}
                   />
                 ))}
               </div>
@@ -374,6 +377,7 @@ const App: React.FC = () => {
         categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
       />
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {pipVideoUrl && <PipPlayer url={pipVideoUrl} onClose={() => setPipVideoUrl(null)} />}
     </div>
   );
 };

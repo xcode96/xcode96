@@ -7,6 +7,7 @@ interface ToolCardProps {
   isFavorite: boolean;
   onToggleFavorite: (toolId: string) => void;
   onRatingRequest: () => void;
+  onPlayVideoInPip: (url: string) => void;
 }
 
 const colorMap = {
@@ -53,7 +54,7 @@ const getRatingColorClass = (rating: number): string => {
 
 const defaultColor = colorMap.blue;
 
-export const ToolCard: React.FC<ToolCardProps> = ({ tool, isFavorite, onToggleFavorite, onRatingRequest }) => {
+export const ToolCard: React.FC<ToolCardProps> = ({ tool, isFavorite, onToggleFavorite, onRatingRequest, onPlayVideoInPip }) => {
   const colors = colorMap[tool.tagColor] || defaultColor;
 
   const handleFavoriteClick = (e: React.MouseEvent) => {
@@ -67,6 +68,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isFavorite, onToggleFa
       e.stopPropagation();
       onRatingRequest();
   }
+
+  const handlePlayVideoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (tool.videoUrl) {
+      onPlayVideoInPip(tool.videoUrl);
+    }
+  };
 
   const ratingColorClass = getRatingColorClass(tool.rating);
 
@@ -84,16 +93,13 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, isFavorite, onToggleFa
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
         />
         {tool.videoUrl && (
-            <a 
-                href={tool.videoUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                onClick={(e) => e.stopPropagation()} 
+            <button
+                onClick={handlePlayVideoClick}
                 className="absolute top-3 left-3 p-1 bg-black/40 text-white rounded-full hover:bg-black/60 transition-colors"
-                aria-label="Watch video"
+                aria-label="Play video in Picture-in-Picture"
             >
                 <PlayCircleIcon className="w-6 h-6" />
-            </a>
+            </button>
         )}
         <div className="absolute top-3 right-3">
           <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${colors.tag}`}>
