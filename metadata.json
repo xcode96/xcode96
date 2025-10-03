@@ -1,0 +1,5 @@
+{
+  "name": "XCODE96 - Tool Directory",
+  "description": "A web application that provides a directory of security tools, inspired by the XCODE96 design. Users can browse, search, and filter tools across various categories.",
+  "requestFramePermissions": []
+}
