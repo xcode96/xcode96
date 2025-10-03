@@ -11,24 +11,23 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setVisible(true); // Trigger fade-in animation
+    setVisible(true);
     const timer = setTimeout(() => {
       handleClose();
     }, 3000);
-
     return () => clearTimeout(timer);
   }, [message, type]);
   
   const handleClose = () => {
       setVisible(false);
-      // Allow fade-out animation to complete before calling onClose
       setTimeout(onClose, 300);
   }
 
   const isSuccess = type === 'success';
-
   const baseClasses = "fixed top-5 right-5 w-full max-w-xs p-4 rounded-lg shadow-lg text-white flex items-center gap-3 z-50 transition-all duration-300 ease-in-out";
-  const typeClasses = isSuccess ? "bg-green-500" : "bg-red-500";
+  const typeClasses = isSuccess 
+    ? "bg-green-500 dark:bg-green-600" 
+    : "bg-red-500 dark:bg-red-600";
   const visibilityClasses = visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10";
 
   return (

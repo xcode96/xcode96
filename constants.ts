@@ -47,6 +47,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/kYmO3P3.png',
     category: 'Persistence Techniques',
     tagColor: 'red',
+    rating: 5,
   },
   {
     id: 'onionland',
@@ -57,6 +58,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/R3iUzgK.png',
     category: 'Reconnaissance and OSINT',
     tagColor: 'red',
+    rating: 4,
   },
   {
     id: 'sharplateral',
@@ -67,6 +69,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/gO07M3o.png',
     category: 'Post-Exploitation',
     tagColor: 'red',
+    rating: 4,
   },
   {
     id: 'shellcode-exec',
@@ -77,6 +80,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/sNfIZz2.png',
     category: 'Exploitation Frameworks',
     tagColor: 'red',
+    rating: 5,
   },
   {
     id: 'sotwe',
@@ -87,6 +91,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/yL7bE5v.png',
     category: 'Reconnaissance and OSINT',
     tagColor: 'red',
+    rating: 3,
   },
   {
     id: 'swaggerjacker',
@@ -97,6 +102,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/4z8gVnC.png',
     category: 'Web Application Security',
     tagColor: 'blue',
+    rating: 4,
   },
   {
     id: 'gemini-cli',
@@ -107,6 +113,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/i7H5WfC.png',
     category: 'AI Security',
     tagColor: 'indigo',
+    rating: 5,
   },
   {
     id: 'freeway',
@@ -117,6 +124,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/tHqgG9R.png',
     category: 'Wireless Hacking',
     tagColor: 'green',
+    rating: 3,
   },
    {
     id: 'red-teaming-llm',
@@ -127,6 +135,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/hO5e8R2.png',
     category: 'AI Security',
     tagColor: 'indigo',
+    rating: 4,
   },
   {
     id: 'justdelete',
@@ -137,6 +146,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/4oW5sQ5.png',
     category: 'Security Awareness',
     tagColor: 'purple',
+    rating: 4,
   },
   {
     id: 'hunter',
@@ -147,6 +157,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/3D1T6Pq.png',
     category: 'Reconnaissance and OSINT',
     tagColor: 'red',
+    rating: 5,
   },
    {
     id: 'uh0h365',
@@ -157,6 +168,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/7wM6JtA.png',
     category: 'Social Engineering',
     tagColor: 'pink',
+    rating: 3,
   },
   {
     id: 'payload-virus',
@@ -167,6 +179,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/5lD3A0I.png',
     category: 'Exploitation Frameworks',
     tagColor: 'red',
+    rating: 4,
   },
   {
     id: 'credmap',
@@ -177,6 +190,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/3z1g4uF.png',
     category: 'Password Attacks',
     tagColor: 'red',
+    rating: 4,
   },
   {
     id: 'http-observatory',
@@ -187,6 +201,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/9v8H1iX.png',
     category: 'Web Application Security',
     tagColor: 'blue',
+    rating: 5,
   },
   {
     id: 'bearer',
@@ -197,5 +212,6 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/fA7n6O8.png',
     category: 'DevSecOps Tools',
     tagColor: 'yellow',
+    rating: 3,
   },
 ];

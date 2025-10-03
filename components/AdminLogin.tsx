@@ -30,14 +30,14 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, users })
       <div className="w-full max-w-md">
         <form 
           onSubmit={handleSubmit}
-          className="bg-white border border-gray-200 shadow-2xl rounded-xl px-8 pt-6 pb-8 mb-4"
+          className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-2xl rounded-xl px-8 pt-6 pb-8 mb-4"
         >
           <div className="mb-8 text-center">
-            <div className="inline-block bg-slate-100 p-4 rounded-full mb-4">
+            <div className="inline-block bg-slate-100 dark:bg-slate-700 p-4 rounded-full mb-4">
                 <ShieldCheckIcon className="w-10 h-10 text-blue-500" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Admin Panel Login</h1>
-            <p className="text-gray-500 text-sm">Access the control panel</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin Panel Login</h1>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">Access the control panel</p>
           </div>
           {error && (
             <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
@@ -45,11 +45,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, users })
             </div>
           )}
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="username">
               Username
             </label>
             <input
-              className="bg-gray-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg w-full py-2 px-3 text-gray-900 dark:text-gray-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               id="username"
               type="text"
               placeholder="admin"
@@ -59,11 +59,11 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, users })
             />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="password">
               Password
             </label>
             <input
-              className="bg-gray-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="bg-gray-50 dark:bg-slate-700 border border-gray-300 dark:border-slate-600 rounded-lg w-full py-2 px-3 text-gray-900 dark:text-gray-200 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
               id="password"
               type="password"
               placeholder="******************"
@@ -81,7 +81,7 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, users })
             </button>
           </div>
         </form>
-        <p className="text-center text-gray-500 text-xs">
+        <p className="text-center text-gray-500 dark:text-gray-400 text-xs">
           &copy;2024 XCODE96 Corp. All rights reserved.
         </p>
       </div>

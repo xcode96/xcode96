@@ -1,8 +1,11 @@
 import React, { useState, useRef, useMemo } from 'react';
 import type { AdminUser, Tool, Category, SuggestedTool } from '../types';
-import { UserPlusIcon, LogoutIcon, UserIcon, ToolsIcon, PencilIcon, TrashIcon, DownloadIcon, UploadIcon, PlusIcon, InboxIcon, EyeIcon } from './Icons';
+import { UserIcon, ToolsIcon, DownloadIcon, UploadIcon, InboxIcon, LogoutIcon } from './Icons';
 import { ToolFormModal } from './ToolFormModal';
 import { SuggestionDetailModal } from './SuggestionDetailModal';
+import { UserManagementPanel } from './admin/UserManagementPanel';
+import { ToolManagementPanel } from './admin/ToolManagementPanel';
+import { SuggestionManagementPanel } from './admin/SuggestionManagementPanel';
 
 interface AdminDashboardProps {
   users: AdminUser[];
@@ -22,40 +25,17 @@ interface AdminDashboardProps {
 
 type ActiveTab = 'users' | 'tools' | 'suggestions';
 
-export const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
-    users, onAddUser, onLogout, tools, suggestions, onApproveSuggestion, onRejectSuggestion,
-    categories, onAddTool, onEditTool, onDeleteTool, onImport, showToast
-}) => {
+export const AdminDashboard: React.FC<AdminDashboardProps> = (props) => {
+  const { users, onLogout, tools, suggestions, onImport, showToast } = props;
   const [activeTab, setActiveTab] = useState<ActiveTab>('users');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // User form state
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [role, setRole] = useState<'Admin' | 'Super Admin'>('Admin');
-
-  // Modal and workflow state
   const [isToolModalOpen, setIsToolModalOpen] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
   const [reviewingSuggestion, setReviewingSuggestion] = useState<SuggestedTool | null>(null);
   const [suggestionToEdit, setSuggestionToEdit] = useState<SuggestedTool | null>(null);
 
   const pendingSuggestionsCount = useMemo(() => suggestions.filter(s => s.status === 'pending').length, [suggestions]);
-
-  const handleAddUserSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!username || !email || !password) {
-      alert('Please fill all fields.');
-      return;
-    }
-    onAddUser({ username, email, password, role });
-    // Reset form
-    setUsername('');
-    setEmail('');
-    setPassword('');
-    setRole('Admin');
-  };
 
   const handleOpenAddToolModal = () => {
     setEditingTool(null);
@@ -76,28 +56,24 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const handleEditAndApprove = (suggestion: SuggestedTool) => {
     setReviewingSuggestion(null);
     setSuggestionToEdit(suggestion);
-    setEditingTool({ // Pre-fill form with suggestion data
-        id: '', // Not a real tool yet
-        name: suggestion.name,
-        description: suggestion.description,
-        link: suggestion.link,
-        videoUrl: suggestion.videoUrl,
-        author: { name: 'Suggested', avatarUrl: '' },
-        imageUrl: suggestion.imageUrl,
-        category: suggestion.category,
-        tagColor: suggestion.tagColor,
+    // FIX: Added missing 'rating' property to the object being created for `setEditingTool`.
+    setEditingTool({
+        id: '', name: suggestion.name, description: suggestion.description,
+        link: suggestion.link, videoUrl: suggestion.videoUrl, author: { name: 'Suggested', avatarUrl: '' },
+        imageUrl: suggestion.imageUrl, category: suggestion.category, tagColor: suggestion.tagColor,
+        rating: suggestion.rating,
     });
     setIsToolModalOpen(true);
   };
 
   const handleSaveTool = (toolData: Omit<Tool, 'id' | 'author'> | Tool) => {
     if (suggestionToEdit) {
-      onApproveSuggestion(suggestionToEdit.suggestionId, toolData as Omit<Tool, 'id' | 'author'>);
+      props.onApproveSuggestion(suggestionToEdit.suggestionId, toolData as Omit<Tool, 'id' | 'author'>);
       setSuggestionToEdit(null);
     } else if ('id' in toolData && toolData.id) {
-      onEditTool(toolData as Tool);
+      props.onEditTool(toolData as Tool);
     } else {
-      onAddTool(toolData as Omit<Tool, 'id' | 'author'>);
+      props.onAddTool(toolData as Omit<Tool, 'id' | 'author'>);
     }
     setIsToolModalOpen(false);
     setEditingTool(null);
@@ -105,23 +81,19 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleDeleteToolClick = (toolId: string) => {
     if (window.confirm('Are you sure you want to delete this tool?')) {
-        onDeleteTool(toolId);
+        props.onDeleteTool(toolId);
     }
   }
 
   const handleRejectClick = (suggestionId: string) => {
-     if (window.confirm('Are you sure you want to reject this tool suggestion?')) {
-        onRejectSuggestion(suggestionId);
+     if (window.confirm('Are you sure you want to reject this tool suggestion? This will permanently delete it.')) {
+        props.onRejectSuggestion(suggestionId);
         setReviewingSuggestion(null);
     }
   }
 
   const handleExport = () => {
-    const data = {
-        tools,
-        adminUsers: users,
-        suggestions,
-    };
+    const data = { tools, adminUsers: users, suggestions };
     const jsonString = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -129,15 +101,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const date = new Date().toISOString().slice(0, 10);
     a.href = url;
     a.download = `xcode96-backup-${date}.json`;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handleImportClick = () => fileInputRef.current?.click();
   
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -145,21 +113,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
-          const text = e.target?.result;
-          if (typeof text === 'string') {
-            const importedData = JSON.parse(text);
-            if (window.confirm('Are you sure you want to import this data? This will overwrite all existing data.')) {
-              onImport(importedData);
-              showToast('Data imported successfully!');
-            }
+          const importedData = JSON.parse(e.target?.result as string);
+          if (window.confirm('This will overwrite all existing data. Are you sure?')) {
+            onImport(importedData);
+            showToast('Data imported successfully!');
           }
         } catch (error) {
-          console.error('Error parsing JSON file:', error);
-          showToast('Failed to import data. Please check the file format.', 'error');
+          showToast('Failed to import data. Invalid file.', 'error');
         } finally {
-            if(fileInputRef.current) {
-                fileInputRef.current.value = '';
-            }
+            if(fileInputRef.current) fileInputRef.current.value = '';
         }
       };
       reader.readAsText(file);
@@ -167,11 +129,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   };
 
   return (
-    <div className="text-gray-700">
+    <div className="text-gray-700 dark:text-gray-300">
       <div className="flex justify-between items-start mb-8 flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-500">Welcome, admin. Manage users, tools, and site data.</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+          <p className="text-gray-500 dark:text-gray-400">Welcome, admin. Manage users, tools, and site data.</p>
         </div>
         <div className="flex items-center gap-3">
             <input type="file" ref={fileInputRef} onChange={handleFileChange} accept=".json" className="hidden" />
@@ -191,8 +153,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
       </div>
 
-      {/* TABS */}
-      <div className="mb-8 border-b border-gray-200">
+      <div className="mb-8 border-b border-gray-200 dark:border-slate-700">
         <nav className="flex -mb-px space-x-6">
             <TabButton icon={UserIcon} label="User Management" isActive={activeTab === 'users'} onClick={() => setActiveTab('users')} />
             <TabButton icon={ToolsIcon} label="Tool Management" isActive={activeTab === 'tools'} onClick={() => setActiveTab('tools')} />
@@ -200,10 +161,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </nav>
       </div>
 
-      {/* CONTENT */}
-      {activeTab === 'users' && <UserManagementPanel users={users} onAddUserSubmit={handleAddUserSubmit} username={username} setUsername={setUsername} email={email} setEmail={setEmail} password={password} setPassword={setPassword} role={role} setRole={setRole} />}
-      {activeTab === 'tools' && <ToolManagementPanel tools={tools} onAddClick={handleOpenAddToolModal} onEditClick={handleOpenEditToolModal} onDeleteClick={handleDeleteToolClick} />}
-      {activeTab === 'suggestions' && <SuggestionManagementPanel suggestions={suggestions} onReview={handleReviewClick} />}
+      {activeTab === 'users' && <UserManagementPanel users={props.users} onAddUser={props.onAddUser} />}
+      {activeTab === 'tools' && <ToolManagementPanel tools={props.tools} onAddClick={handleOpenAddToolModal} onEditClick={handleOpenEditToolModal} onDeleteClick={handleDeleteToolClick} />}
+      {activeTab === 'suggestions' && <SuggestionManagementPanel suggestions={props.suggestions} onReview={handleReviewClick} />}
     
       {isToolModalOpen && (
         <ToolFormModal 
@@ -211,7 +171,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             onClose={() => setIsToolModalOpen(false)}
             onSave={handleSaveTool}
             tool={editingTool}
-            categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
+            categories={props.categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
         />
       )}
       {reviewingSuggestion && (
@@ -227,167 +187,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   );
 };
 
-// Tab Button Component
 const TabButton = ({icon: Icon, label, isActive, onClick, badgeCount = 0}) => (
-     <button onClick={onClick} className={`relative flex items-center gap-2 px-1 py-3 border-b-2 text-sm font-medium transition-colors ${isActive ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>
+     <button onClick={onClick} className={`relative flex items-center gap-2 px-1 py-3 border-b-2 text-sm font-medium transition-colors ${isActive ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-slate-600'}`}>
         <Icon className="w-5 h-5" />
         {label}
         {badgeCount > 0 && (
             <span className="absolute top-1 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">{badgeCount}</span>
         )}
     </button>
-)
-
-// User Management Panel Component
-const UserManagementPanel = ({users, onAddUserSubmit, username, setUsername, email, setEmail, password, setPassword, role, setRole}) => (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
-        <div className="lg:col-span-1 bg-white border border-gray-200 rounded-xl p-6 h-fit">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <UserPlusIcon className="w-6 h-6 text-green-500"/>
-                Create New Admin User
-            </h2>
-            <form onSubmit={onAddUserSubmit}>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="new-username">Username</label>
-                    <input value={username} onChange={e => setUsername(e.target.value)} className="bg-slate-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500" id="new-username" type="text" required />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="new-email">Email</label>
-                    <input value={email} onChange={e => setEmail(e.target.value)} className="bg-slate-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500" id="new-email" type="email" required />
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="new-password">Password</label>
-                    <input value={password} onChange={e => setPassword(e.target.value)} className="bg-slate-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500" id="new-password" type="password" required />
-                </div>
-                <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="new-role">Role</label>
-                    <select value={role} onChange={e => setRole(e.target.value as 'Admin' | 'Super Admin')} id="new-role" className="bg-slate-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 focus:ring-blue-500 focus:border-blue-500">
-                        <option>Admin</option>
-                        <option>Super Admin</option>
-                    </select>
-                </div>
-                <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
-                    Add User
-                </button>
-            </form>
-        </div>
-
-        <div className="lg:col-span-2 bg-white border border-gray-200 rounded-xl">
-            <div className="p-6">
-                 <h2 className="text-xl font-bold text-gray-900 mb-4">Current Administrators</h2>
-            </div>
-            <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-gray-500">
-                    <thead className="text-xs text-gray-700 uppercase bg-slate-50">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">Username</th>
-                            <th scope="col" className="px-6 py-3">Email</th>
-                            <th scope="col" className="px-6 py-3">Role</th>
-                            <th scope="col" className="px-6 py-3">Date Added</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(user => (
-                            <tr key={user.id} className="border-b border-gray-200 hover:bg-slate-50/50">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{user.username}</th>
-                                <td className="px-6 py-4">{user.email}</td>
-                                <td className="px-6 py-4">
-                                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${user.role === 'Super Admin' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
-                                        {user.role}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">{new Date(user.createdAt).toLocaleDateString()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 );
-
-// Tool Management Panel Component
-const ToolManagementPanel = ({ tools, onAddClick, onEditClick, onDeleteClick }) => (
-    <div className="bg-white border border-gray-200 rounded-xl animate-fade-in">
-        <div className="p-6 flex justify-between items-center">
-             <h2 className="text-xl font-bold text-gray-900">Manage Tools</h2>
-             <button onClick={onAddClick} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm">
-                <PlusIcon className="w-5 h-5"/>
-                Add New Tool
-             </button>
-        </div>
-        <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left text-gray-500">
-                <thead className="text-xs text-gray-700 uppercase bg-slate-50">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">Tool Name</th>
-                        <th scope="col" className="px-6 py-3">Category</th>
-                        <th scope="col" className="px-6 py-3 text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tools.map(tool => (
-                        <tr key={tool.id} className="border-b border-gray-200 hover:bg-slate-50/50">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{tool.name}</th>
-                            <td className="px-6 py-4">{tool.category}</td>
-                            <td className="px-6 py-4 text-right space-x-2">
-                                <button onClick={() => onEditClick(tool)} className="p-1.5 text-gray-500 hover:text-blue-600 rounded-md hover:bg-gray-100 transition-colors">
-                                    <PencilIcon className="w-4 h-4" />
-                                </button>
-                                <button onClick={() => onDeleteClick(tool.id)} className="p-1.5 text-gray-500 hover:text-red-600 rounded-md hover:bg-gray-100 transition-colors">
-                                    <TrashIcon className="w-4 h-4" />
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    </div>
-);
-
-// Suggestion Management Panel Component
-const SuggestionManagementPanel = ({ suggestions, onReview }: { suggestions: SuggestedTool[], onReview: (suggestion: SuggestedTool) => void }) => {
-    const pendingSuggestions = suggestions.filter(s => s.status === 'pending');
-
-    return (
-        <div className="bg-white border border-gray-200 rounded-xl animate-fade-in">
-            <div className="p-6">
-                 <h2 className="text-xl font-bold text-gray-900">Pending Tool Suggestions</h2>
-                 {pendingSuggestions.length === 0 && <p className="text-gray-500 mt-2">There are no pending suggestions.</p>}
-            </div>
-            {pendingSuggestions.length > 0 && (
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-500">
-                        <thead className="text-xs text-gray-700 uppercase bg-slate-50">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">Tool Name</th>
-                                <th scope="col" className="px-6 py-3">Category</th>
-                                <th scope="col" className="px-6 py-3">Link</th>
-                                <th scope="col" className="px-6 py-3 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {pendingSuggestions.map(suggestion => (
-                                <tr key={suggestion.suggestionId} className="border-b border-gray-200 hover:bg-slate-50/50">
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{suggestion.name}</th>
-                                    <td className="px-6 py-4">{suggestion.category}</td>
-                                    <td className="px-6 py-4">
-                                        <a href={suggestion.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-                                            View Link
-                                        </a>
-                                    </td>
-                                    <td className="px-6 py-4 text-right space-x-2">
-                                        <button onClick={() => onReview(suggestion)} className="flex items-center gap-1.5 bg-indigo-600 text-white hover:bg-indigo-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
-                                            <EyeIcon className="w-4 h-4" /> Review
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            )}
-        </div>
-    )
-};

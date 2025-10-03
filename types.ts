@@ -1,6 +1,8 @@
 import type React from 'react';
 import { tagColors } from './constants';
 
+export type Theme = 'light' | 'dark';
+
 export interface Category {
   id: string;
   name: string;
@@ -23,6 +25,7 @@ export interface Tool {
   imageUrl: string;
   category: string;
   tagColor: TagColor;
+  rating: number;
 }
 
 export interface SuggestedTool extends Omit<Tool, 'id' | 'author'> {

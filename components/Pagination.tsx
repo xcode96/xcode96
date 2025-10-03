@@ -47,13 +47,18 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
   };
 
   const pages = getPageNumbers();
+  const buttonBaseClasses = "flex items-center justify-center px-3 h-8 text-sm font-medium transition-colors";
+  const disabledClasses = "disabled:opacity-50 disabled:cursor-not-allowed";
+  
+  const defaultButtonClasses = `text-gray-500 dark:text-gray-400 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-gray-700 dark:hover:text-white`;
+  const activeButtonClasses = `text-white bg-blue-600 border-blue-600`;
 
   return (
     <nav className="flex items-center justify-center mt-8" aria-label="Pagination">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className={`${buttonBaseClasses} ${defaultButtonClasses} rounded-l-lg ${disabledClasses}`}
       >
         <ChevronLeftIcon className="w-4 h-4 mr-1" />
         Previous
@@ -65,16 +70,14 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
             <button
               key={index}
               onClick={() => onPageChange(page)}
-              className={`flex items-center justify-center px-3 h-8 text-sm font-medium transition-colors border-y -ml-px ${
-                currentPage === page
-                  ? 'text-white bg-blue-600 border-blue-600'
-                  : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700'
+              className={`${buttonBaseClasses} -ml-px ${
+                currentPage === page ? activeButtonClasses : defaultButtonClasses
               }`}
             >
               {page}
             </button>
           ) : (
-            <span key={index} className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 -ml-px">
+            <span key={index} className={`${buttonBaseClasses} -ml-px ${defaultButtonClasses}`}>
               {page}
             </span>
           )
@@ -84,7 +87,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className={`${buttonBaseClasses} ${defaultButtonClasses} rounded-r-lg ${disabledClasses}`}
       >
         Next
         <ChevronRightIcon className="w-4 h-4 ml-1" />

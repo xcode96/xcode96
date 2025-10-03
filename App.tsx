@@ -8,7 +8,7 @@ import { Pagination } from './components/Pagination';
 import { SuggestionModal } from './components/SuggestionModal';
 import { Toast } from './components/Toast';
 import { initialTools, categories as baseCategories } from './constants';
-import type { Tool, AdminUser, SuggestedTool } from './types';
+import type { Tool, AdminUser, SuggestedTool, Theme } from './types';
 
 type View = 'home' | 'admin_login' | 'admin_dashboard';
 
@@ -34,6 +34,14 @@ const App: React.FC = () => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const storedTheme = window.localStorage.getItem('theme') as Theme;
+      if (storedTheme) return storedTheme;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  });
   
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
     try {
@@ -79,76 +87,32 @@ const App: React.FC = () => {
     }
   });
 
-  const [ratings, setRatings] = useState<Record<string, number>>(() => {
-    try {
-        const savedRatings = localStorage.getItem('toolRatings');
-        return savedRatings ? JSON.parse(savedRatings) : {};
-    } catch (error) {
-        console.error("Failed to parse ratings from localStorage", error);
-        return {};
-    }
-  });
-
   const [minRating, setMinRating] = useState<number>(0);
 
-  // Effect to save data to localStorage whenever it changes
-  useEffect(() => {
-    try {
-        localStorage.setItem('tools', JSON.stringify(tools));
-    } catch (error) {
-        console.error("Failed to save tools to localStorage", error);
-    }
-  }, [tools]);
-  
-  useEffect(() => {
-    try {
-        localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
-    } catch (error) {
-        console.error("Failed to save admin users to localStorage", error);
-    }
-  }, [adminUsers]);
+  // Theme effect
+   useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
-  useEffect(() => {
-    try {
-        localStorage.setItem('toolSuggestions', JSON.stringify(suggestions));
-    } catch (error) {
-        console.error("Failed to save suggestions to localStorage", error);
-    }
-  }, [suggestions]);
+  // Data persistence effects
+  useEffect(() => { localStorage.setItem('tools', JSON.stringify(tools)); }, [tools]);
+  useEffect(() => { localStorage.setItem('adminUsers', JSON.stringify(adminUsers)); }, [adminUsers]);
+  useEffect(() => { localStorage.setItem('toolSuggestions', JSON.stringify(suggestions)); }, [suggestions]);
+  useEffect(() => { localStorage.setItem('toolFavorites', JSON.stringify(favorites)); }, [favorites]);
 
+  // Routing effects
   useEffect(() => {
-    try {
-        localStorage.setItem('toolFavorites', JSON.stringify(favorites));
-    } catch (error) {
-        console.error("Failed to save favorites to localStorage", error);
-    }
-  }, [favorites]);
-
-  useEffect(() => {
-    try {
-        localStorage.setItem('toolRatings', JSON.stringify(ratings));
-    } catch (error) {
-        console.error("Failed to save ratings to localStorage", error);
-    }
-  }, [ratings]);
-
-  // Effect to handle hash changes (browser back/forward buttons)
-  useEffect(() => {
-    const handleHashChange = () => {
-        setView(getViewFromHash());
-    };
-
+    const handleHashChange = () => setView(getViewFromHash());
     window.addEventListener('hashchange', handleHashChange);
-    return () => {
-        window.removeEventListener('hashchange', handleHashChange);
-    };
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Effect for route protection
   useEffect(() => {
-    const currentView = getViewFromHash();
-    if (currentView === 'admin_dashboard' && !isLoggedIn) {
-        window.location.hash = '/login'; // Redirect to login
+    if (getViewFromHash() === 'admin_dashboard' && !isLoggedIn) {
+        window.location.hash = '/login';
     }
   }, [isLoggedIn, view]);
 
@@ -157,26 +121,21 @@ const App: React.FC = () => {
     if (window.location.hash.substring(1) !== path) {
       window.location.hash = path;
     } else {
-      // If hash is already correct, but view might be out of sync (e.g. initial load), force a view update.
       setView(getViewFromHash());
     }
   };
   
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
   };
 
   const handleNavigation = (targetView: 'home' | 'admin_login') => {
-    switch (targetView) {
-        case 'home':
-            navigate('/');
-            break;
-        case 'admin_login':
-            navigate('/login');
-            break;
-    }
+    navigate(targetView === 'home' ? '/' : '/login');
     setIsMobileSidebarOpen(false);
+  };
+  
+  const handleToggleTheme = () => {
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   const handleSetSelectedCategory = (categoryName: string) => {
@@ -185,23 +144,17 @@ const App: React.FC = () => {
   };
 
   const categories = useMemo(() => {
-    const sourceTools = tools;
-    const toolCountsByCategory = sourceTools.reduce((acc, tool) => {
+    const toolCountsByCategory = tools.reduce((acc, tool) => {
         acc[tool.category] = (acc[tool.category] || 0) + 1;
         return acc;
     }, {} as Record<string, number>);
 
-    return baseCategories.map(category => {
-        let count = 0;
-        if (category.name === 'All Categories') {
-            count = sourceTools.length;
-        } else if (category.name === 'Favorites') {
-            count = favorites.length;
-        } else {
-            count = toolCountsByCategory[category.name] || 0;
-        }
-        return { ...category, count };
-    });
+    return baseCategories.map(category => ({
+        ...category,
+        count: category.name === 'All Categories' ? tools.length :
+               category.name === 'Favorites' ? favorites.length :
+               toolCountsByCategory[category.name] || 0,
+    }));
   }, [tools, favorites]);
 
   const handleLoginSuccess = () => {
@@ -262,15 +215,15 @@ const App: React.FC = () => {
 
   const handleApproveSuggestion = (suggestionId: string, finalToolData: Omit<Tool, 'id' | 'author'>) => {
     const suggestion = suggestions.find(s => s.suggestionId === suggestionId);
-    if (suggestion && suggestion.status === 'pending') {
+    if (suggestion) {
         handleAddTool(finalToolData);
-        setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'approved' } : s));
+        setSuggestions(prev => prev.filter(s => s.suggestionId !== suggestionId));
         showToast('Suggestion approved and tool added.', 'success');
     }
   };
 
   const handleRejectSuggestion = (suggestionId: string) => {
-    setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'rejected' } : s));
+    setSuggestions(prev => prev.filter(s => s.suggestionId !== suggestionId));
     showToast('Suggestion has been rejected.', 'error');
   };
 
@@ -283,52 +236,36 @@ const App: React.FC = () => {
     );
   };
 
-  const handleSetRating = (toolId: string, rating: number) => {
-    setRatings(prev => ({
-        ...prev,
-        [toolId]: rating,
-    }));
-  };
-
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchTerm, minRating]);
 
   const fullyFilteredTools = useMemo(() => {
-    let sourceTools = tools;
+    let sourceTools = selectedCategory === 'Favorites' 
+        ? tools.filter(tool => favorites.includes(tool.id)) 
+        : tools;
 
-    if (selectedCategory === 'Favorites') {
-        sourceTools = sourceTools.filter(tool => favorites.includes(tool.id));
-    }
-    
     if (minRating > 0) {
-        sourceTools = sourceTools.filter(tool => (ratings[tool.id] || 0) >= minRating);
+        sourceTools = sourceTools.filter(tool => (tool.rating || 0) >= minRating);
     }
 
-    const filteredByCategory = sourceTools
-      .filter((tool) => {
-        if (selectedCategory === 'All Categories' || selectedCategory === 'Favorites') return true;
-        return tool.category === selectedCategory;
-      });
+    const filteredByCategory = (selectedCategory === 'All Categories' || selectedCategory === 'Favorites')
+      ? sourceTools
+      : sourceTools.filter((tool) => tool.category === selectedCategory);
 
-    const filteredBySearch = filteredByCategory.filter((tool) => {
-      if (searchTerm.trim() === '') return true;
-      const term = searchTerm.toLowerCase();
-      return (
-        tool.name.toLowerCase().includes(term) ||
-        tool.description.toLowerCase().includes(term)
-      );
-    });
+    const filteredBySearch = filteredByCategory.filter((tool) => 
+        tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     
-    // Prioritize name matches
     return filteredBySearch.sort((a, b) => {
-        const aNameMatch = a.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const bNameMatch = b.name.toLowerCase().includes(searchTerm.toLowerCase());
-        if (aNameMatch && !bNameMatch) return -1;
-        if (!aNameMatch && bNameMatch) return 1;
+        const aMatch = a.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const bMatch = b.name.toLowerCase().includes(searchTerm.toLowerCase());
+        if (aMatch && !bMatch) return -1;
+        if (!aMatch && bMatch) return 1;
         return 0;
     });
-  }, [selectedCategory, searchTerm, tools, favorites, ratings, minRating]);
+  }, [selectedCategory, searchTerm, tools, favorites, minRating]);
 
   const totalPages = Math.ceil(fullyFilteredTools.length / TOOLS_PER_PAGE);
 
@@ -364,7 +301,7 @@ const App: React.FC = () => {
         return (
           <>
             <div className="flex justify-between items-center mb-6">
-              <h1 className="text-sm text-gray-500">
+              <h1 className="text-sm text-gray-500 dark:text-gray-400">
                 Showing {paginatedTools.length} of {fullyFilteredTools.length} tool(s)
               </h1>
             </div>
@@ -376,15 +313,14 @@ const App: React.FC = () => {
                     tool={tool}
                     isFavorite={favorites.includes(tool.id)}
                     onToggleFavorite={toggleFavorite}
-                    rating={ratings[tool.id]}
-                    onSetRating={handleSetRating}
+                    onRatingRequest={() => showToast('Your rating request has been submitted to the admins.')}
                   />
                 ))}
               </div>
             ) : (
                 <div className="text-center py-16">
-                    <h2 className="text-xl font-semibold text-gray-600">No tools found</h2>
-                    <p className="text-gray-500 mt-2">Try adjusting your search or filters.</p>
+                    <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-300">No tools found</h2>
+                    <p className="text-gray-500 dark:text-gray-400 mt-2">Try adjusting your search or filters.</p>
                 </div>
             )}
             {totalPages > 1 && (
@@ -400,10 +336,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-white">
+    <div className={`min-h-screen flex`}>
       {isMobileSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black/30 z-30 lg:hidden"
+          className="fixed inset-0 bg-black/30 z-30 lg:hidden dark:bg-black/50"
           onClick={() => setIsMobileSidebarOpen(false)}
           aria-hidden="true"
         ></div>
@@ -424,8 +360,10 @@ const App: React.FC = () => {
           onNavigate={handleNavigation} 
           onMobileMenuClick={() => setIsMobileSidebarOpen(true)}
           onSuggestToolClick={() => setIsSuggestionModalOpen(true)}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
         />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-[rgb(224,232,255)]">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-white dark:bg-slate-800">
           {renderContent()}
         </main>
       </div>

@@ -7,24 +7,31 @@
     <title>XCODE96 - Tool Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      body {
-        background-color: white;
-      }
-
-      /* For custom scrollbar styling to match the light theme */
+      /* Light theme scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #e0e8ff;
+        background: #f3f4f6; /* gray-100 */
       }
       ::-webkit-scrollbar-thumb {
-        background: #bdc8e2; 
+        background: #d1d5db; /* gray-300 */
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #a9b5d1;
+        background: #9ca3af; /* gray-400 */
+      }
+      
+      /* Dark theme scrollbar */
+      .dark ::-webkit-scrollbar-track {
+        background: #1e293b; /* slate-800 */
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #475569; /* slate-600 */
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #64748b; /* slate-500 */
       }
     </style>
   <script type="importmap">
@@ -37,8 +44,16 @@
   }
 }
 </script>
+<script>
+    // Immediately apply theme from localStorage or system preference to prevent FOUC
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
 </head>
-  <body class="text-gray-800 font-sans">
+  <body class="bg-white dark:bg-slate-900 text-gray-800 dark:text-gray-200 font-sans">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
