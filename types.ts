@@ -33,6 +33,7 @@ export interface SuggestedTool extends Omit<Tool, 'id' | 'author'> {
 export interface AdminUser {
   id: number;
   username: string;
+  password: string;
   email: string;
   role: 'Admin' | 'Super Admin';
   createdAt: string;

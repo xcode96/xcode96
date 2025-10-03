@@ -5,12 +5,12 @@ import { ToolCard } from './components/ToolCard';
 import { AdminLogin } from './components/AdminLogin';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Pagination } from './components/Pagination';
-import { AboutPage } from './components/AboutPage';
 import { SuggestionModal } from './components/SuggestionModal';
+import { Toast } from './components/Toast';
 import { initialTools, categories as baseCategories } from './constants';
 import type { Tool, AdminUser, SuggestedTool } from './types';
 
-type View = 'home' | 'admin_login' | 'admin_dashboard' | 'about';
+type View = 'home' | 'admin_login' | 'admin_dashboard';
 
 const TOOLS_PER_PAGE = 12;
 
@@ -19,7 +19,6 @@ const getViewFromHash = (): View => {
     switch (hash) {
         case '/login': return 'admin_login';
         case '/dashboard': return 'admin_dashboard';
-        case '/about': return 'about';
         case '/':
         case '':
         default: return 'home';
@@ -34,17 +33,18 @@ const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
     try {
         const savedUsers = localStorage.getItem('adminUsers');
         return savedUsers ? JSON.parse(savedUsers) : [
-            { id: 1, username: 'admin', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
+            { id: 1, username: 'admin', password: 'dqadm', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
         ];
     } catch (error) {
         console.error("Failed to parse admin users from localStorage", error);
         return [
-            { id: 1, username: 'admin', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
+            { id: 1, username: 'admin', password: 'dqadm', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
         ];
     }
   });
@@ -161,17 +161,19 @@ const App: React.FC = () => {
       setView(getViewFromHash());
     }
   };
+  
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
-  const handleNavigation = (targetView: 'home' | 'admin_login' | 'about') => {
+  const handleNavigation = (targetView: 'home' | 'admin_login') => {
     switch (targetView) {
         case 'home':
             navigate('/');
             break;
         case 'admin_login':
             navigate('/login');
-            break;
-        case 'about':
-            navigate('/about');
             break;
     }
     setIsMobileSidebarOpen(false);
@@ -221,6 +223,7 @@ const App: React.FC = () => {
         createdAt: new Date().toISOString(),
       }
     ]);
+    showToast('Admin user created successfully!');
   };
 
   const handleAddTool = (newToolData: Omit<Tool, 'id' | 'author'>) => {
@@ -254,7 +257,7 @@ const App: React.FC = () => {
       };
       setSuggestions(prev => [...prev, newSuggestion]);
       setIsSuggestionModalOpen(false);
-      alert('Thank you for your suggestion! It has been submitted for review.');
+      showToast('Thank you! Your suggestion has been submitted for review.');
   };
 
   const handleApproveSuggestion = (suggestionId: string) => {
@@ -270,11 +273,13 @@ const App: React.FC = () => {
             videoUrl: suggestion.videoUrl,
         });
         setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'approved' } : s));
+        showToast('Suggestion approved and tool added.', 'success');
     }
   };
 
   const handleRejectSuggestion = (suggestionId: string) => {
     setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'rejected' } : s));
+    showToast('Suggestion has been rejected.', 'error');
   };
 
 
@@ -343,7 +348,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (view) {
       case 'admin_login':
-        return <AdminLogin onLoginSuccess={handleLoginSuccess} />;
+        return <AdminLogin users={adminUsers} onLoginSuccess={handleLoginSuccess} />;
       case 'admin_dashboard':
         return (
           <AdminDashboard 
@@ -359,10 +364,9 @@ const App: React.FC = () => {
             onEditTool={handleEditTool}
             onDeleteTool={handleDeleteTool}
             onImport={handleImportData}
+            showToast={showToast}
           />
         );
-      case 'about':
-        return <AboutPage />;
       case 'home':
       default:
         return (
@@ -439,6 +443,7 @@ const App: React.FC = () => {
         onSave={handleSuggestTool}
         categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
       />
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 };

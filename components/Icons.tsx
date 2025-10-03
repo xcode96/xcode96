@@ -114,8 +114,6 @@ export const ChevronRightIcon = ({ className = 'w-6 h-6' }: { className?: string
     </svg>
 );
 
-// Fix: Add missing GptIcon, SendIcon, and CloseIcon for Chatbot component
-// Chatbot Icons
 export const GptIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
@@ -272,57 +270,4 @@ export const SocialEngineeringIcon = ({ className = 'w-6 h-6' }: { className?: s
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.742-.72m-4.742.72a9.094 9.094 0 0 1-3.742-.72m-4.742.72a9.094 9.094 0 0 0-3.742-.72M12 18.72v-2.223m0 2.223c-1.849 0-3.51-.354-5.002-.977M12 18.72c1.849 0 3.51-.354 5.002-.977M12 15c-2.22 0-4-1.78-4-4s1.78-4 4-4 4 1.78 4 4-1.78 4-4 4Zm-6 4.625a2.625 2.625 0 0 1-2.625-2.625V15.375a2.625 2.625 0 0 1 2.625-2.625h12a2.625 2.625 0 0 1 2.625 2.625v1.625a2.625 2.625 0 0 1-2.625 2.625H6Z" />
     </svg>
-);
-export const InformationCircleIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-    </svg>
-);
-
-// About Page Icons
-export const YoutubeIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M19.802 5.322a3.684 3.684 0 0 1 2.604 2.605C23 9.47 23 12 23 12s0 2.53-.594 4.073a3.684 3.684 0 0 1-2.604 2.605C18.069 19.27 12 19.27 12 19.27s-6.069 0-7.602-.594a3.684 3.684 0 0 1-2.604-2.605C1.2 14.53 1.2 12 1.2 12s0-2.53.594-4.073a3.684 3.684 0 0 1 2.604-2.605C5.931 4.73 12 4.73 12 4.73s6.069 0 7.802.592ZM9.73 14.47l5.2-2.47-5.2-2.47v4.94Z" clipRule="evenodd"/>
-    </svg>
-);
-export const BookIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M4 3.75A2.75 2.75 0 0 0 1.25 6.5v11A2.75 2.75 0 0 0 4 20.25h16A2.75 2.75 0 0 0 22.75 17.5V6.5A2.75 2.75 0 0 0 20 3.75H4Zm.908 12.44a.75.75 0 0 1 .834-.944h3.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Zm0-4.5a.75.75 0 0 1 .834-.944h6.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Zm0-4.5a.75.75 0 0 1 .834-.944h3.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Z"/></svg>
-);
-export const BugBountyIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M9.331 4.25a.75.75 0 0 1 1.054-.225 3.001 3.001 0 0 1 3.23 3.23.75.75 0 0 1-.225 1.054l-2.61 1.508a.75.75 0 0 0-.288.558v1.549a.75.75 0 0 0 1.5 0v-.636a.75.75 0 0 0-.07-.31l1.19-2.06a4.5 4.5 0 0 0-4.845-4.845L9.33 4.251Zm4.015 6.56a.75.75 0 0 0-1.054.225 3 3 0 0 0-3.23 3.23.75.75 0 0 0 .225 1.054l2.61 1.508a.75.75 0 0 1 .288.558v1.549a.75.75 0 0 1-1.5 0v-.636a.75.75 0 0 1 .07-.31l-1.19-2.06a4.5 4.5 0 0 1 4.845-4.845l.484.279ZM5.25 12a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75Zm9-3.75a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm0 7.5a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm12 5.25a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V6a.75.75 0 0 0-.75-.75Zm-3.75 9a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Zm7.5 0a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Z" clipRule="evenodd" /></svg>
-);
-export const CTFsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M5.25 3A.75.75 0 0 0 4.5 3.75v16.5a.75.75 0 0 0 1.5 0V15h11.25a.75.75 0 0 1 0 1.5H6v3.75a.75.75 0 0 0 1.5 0V18h11.25a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18.75 4.5H6.375a.75.75 0 0 1 0-1.5H18.75A3.75 3.75 0 0 1 22.5 6.75v8.5A3.75 3.75 0 0 1 18.75 19.5H5.25a.75.75 0 0 0 0 1.5H18a.75.75 0 0 1 0 1.5H5.25A2.25 2.25 0 0 1 3 18.75V3.75A.75.75 0 0 1 4.5 3H5.25Z" clipRule="evenodd" /></svg>
-);
-export const CertificationsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Z" clipRule="evenodd" /></svg>
-);
-export const EventsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3-3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clipRule="evenodd" /></svg>
-);
-export const DownloadsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
-        <path fillRule="evenodd" d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z" clipRule="evenodd" />
-    </svg>
-);
-export const ToolSitesIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M11.06 2.09a1.5 1.5 0 0 1 1.88 0l2.72 2.04a1.5 1.5 0 0 0 .94 0l2.72-2.04a1.5 1.5 0 0 1 1.88 0l2.04 2.72a1.5 1.5 0 0 0 0 .94l-2.04 2.72a1.5 1.5 0 0 1 0 1.88l2.04 2.72a1.5 1.5 0 0 0 0 .94l-2.04 2.72a1.5 1.5 0 0 1-1.88 0l-2.72-2.04a1.5 1.5 0 0 0-.94 0l-2.72 2.04a1.5 1.5 0 0 1-1.88 0l-2.72-2.04a1.5 1.5 0 0 0-.94 0l-2.72 2.04a1.5 1.5 0 0 1-1.88 0l-2.04-2.72a1.5 1.5 0 0 0 0-.94l2.04-2.72a1.5 1.5 0 0 1 0-1.88l-2.04-2.72a1.5 1.5 0 0 0 0-.94l2.04-2.72a1.5 1.5 0 0 1 1.88 0l2.72 2.04a1.5 1.5 0 0 0 .94 0l2.72-2.04ZM12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Z" clipRule="evenodd" /></svg>
-);
-export const ToolLinksIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M15.75 2.25a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0V4.432l-3.32 3.32a.75.75 0 0 1-1.06-1.06l3.32-3.32H13.5a.75.75 0 0 1 0-1.5h2.25ZM8.25 15.75a.75.75 0 0 1 .75.75v2.568l3.32-3.32a.75.75 0 0 1 1.06 1.06l-3.32 3.32h2.568a.75.75 0 0 1 0 1.5H8.25a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 1 .75-.75ZM2.25 8.25a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5H4.432l3.32 3.32a.75.75 0 0 1-1.06 1.06l-3.32-3.32V13.5a.75.75 0 0 1-1.5 0v-4.5a.75.75 0 0 1 .75-.75ZM15.75 8.25a.75.75 0 0 1 .75-.75h2.568l-3.32 3.32a.75.75 0 0 1-1.06-1.06l3.32-3.32V4.5a.75.75 0 0 1 1.5 0v4.5a.75.75 0 0 1-.75.75Z" clipRule="evenodd" /></svg>
-);
-export const AiGptsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M14.25 6a.75.75 0 0 0-1.5 0v.258a3.752 3.752 0 0 0-2.835 1.295l-.253.253a3.752 3.752 0 0 0-1.295 2.835l-.007.258a.75.75 0 0 0 1.5 0l.007-.258c.02-.71.28-1.385.736-1.92a2.253 2.253 0 0 1 1.636-1.012l.258-.007a.75.75 0 0 0 0-1.5l-.258-.007A3.752 3.752 0 0 0 9.742 8.358l-.253.253A3.752 3.752 0 0 0 6.654 11.45l-.007.258a.75.75 0 0 0 1.5 0l.007-.258A2.253 2.253 0 0 1 9.166 9.814l.253-.253a2.253 2.253 0 0 1 1.636-1.012l.258-.007h.007l.258.007c.582.02.946.212 1.218.484l.253.253a.75.75 0 0 0 1.5 0l-.253-.253a2.253 2.253 0 0 1-.484-1.218l-.007-.258V6Z"/><path fillRule="evenodd" d="M3 11.25a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-2.036a3.743 3.743 0 0 1 2.296-.964h2.207a3.75 3.75 0 0 0 3.75-3.75v-2.207a3.743 3.743 0 0 1 .964-2.296H18a.75.75 0 0 0 0-1.5h-5.25a.75.75 0 0 0-.75.75v5.25a.75.75 0 0 0 .75.75H18a.75.75 0 0 0 0-1.5h-5.25a2.25 2.25 0 0 1-2.25-2.25v-2.207a2.242 2.242 0 0 0-1.5-2.176V11.25Zm19.5 7.5a.75.75 0 0 1-1.5 0V11.25a.75.75 0 0 1 1.5 0v2.036a3.743 3.743 0 0 0-2.296.964h-2.207a3.75 3.75 0 0 1-3.75 3.75v2.207a3.743 3.743 0 0 0-.964 2.296V21a.75.75 0 0 1-1.5 0h-1.5a.75.75 0 0 1 0-1.5H12v-5.25a.75.75 0 0 1 .75-.75h5.25a.75.75 0 0 1 0 1.5H12.75a2.25 2.25 0 0 0 2.25 2.25h2.207a2.242 2.242 0 0 1 1.5 2.176V18.75Z" clipRule="evenodd" /></svg>
-);
-export const FrameworksIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z" clipRule="evenodd" /></svg>
-);
-export const FeedsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M4.5 6.375a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 0 1.5H5.25a.75.75 0 0 1-.75-.75Zm0 6a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 0 1.5H5.25a.75.75 0 0 1-.75-.75Zm0 6a.75.75 0 0 1 .75-.75h13.5a.75.75 0 0 1 0 1.5H5.25a.75.75 0 0 1-.75-.75Z" /></svg>
-);
-export const DataLeaksIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M11.25 4.533A9.708 9.708 0 0 0 6 3a9.708 9.708 0 0 0-5.25 1.533v13.084A11.233 11.233 0 0 1 6 16.5a11.233 11.233 0 0 1 5.25 1.117V4.533Zm-3.75 6.13a.75.75 0 0 0-1.5 0v.172a1.31 1.31 0 0 0 .44 1.012l.176.177a.75.75 0 0 0 1.06-1.06l-.176-.177a.124.124 0 0 1-.057-.107v-.172Zm2.25-3.32a.75.75 0 0 0-1.5 0v3.546l-1.55-1.55a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l2.75-2.75a.75.75 0 0 0-1.06-1.06l-1.39 1.39V7.343Z"/><path d="M12.75 4.533V17.61a11.233 11.233 0 0 0 5.25-1.117 11.233 11.233 0 0 0 5.25-1.117V4.533A9.708 9.708 0 0 0 18 3a9.708 9.708 0 0 0-5.25 1.533Zm3.75 6.13a.75.75 0 0 0-1.5 0v.172c0 .043-.023.082-.057.107l-.176.177a.75.75 0 1 0 1.06 1.06l.176-.177c.28-.28.44-.66.44-1.012v-.172Zm2.25-3.32a.75.75 0 0 0-1.5 0v3.546l-1.39-1.39a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l2.75-2.75a.75.75 0 1 0-1.06-1.06L18 10.89V7.343Z"/></svg>
-);
-export const LastNewsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V5.25Zm1.5 0v1.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V5.25a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Zm0 4.5v9a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Zm2.25-3a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75Zm2.25.75a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75Z" clipRule="evenodd" /></svg>
 );

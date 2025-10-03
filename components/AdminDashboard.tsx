@@ -16,13 +16,14 @@ interface AdminDashboardProps {
   onEditTool: (tool: Tool) => void;
   onDeleteTool: (toolId: string) => void;
   onImport: (data: { tools: Tool[]; adminUsers: AdminUser[]; suggestions?: SuggestedTool[] }) => void;
+  showToast: (message: string, type?: 'success' | 'error') => void;
 }
 
 type ActiveTab = 'users' | 'tools' | 'suggestions';
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
     users, onAddUser, onLogout, tools, suggestions, onApproveSuggestion, onRejectSuggestion,
-    categories, onAddTool, onEditTool, onDeleteTool, onImport
+    categories, onAddTool, onEditTool, onDeleteTool, onImport, showToast
 }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('users');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       alert('Please fill all fields.');
       return;
     }
-    onAddUser({ username, email, role });
+    onAddUser({ username, email, password, role });
     // Reset form
     setUsername('');
     setEmail('');
@@ -113,12 +114,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             const importedData = JSON.parse(text);
             if (window.confirm('Are you sure you want to import this data? This will overwrite all existing data.')) {
               onImport(importedData);
-              alert('Data imported successfully!');
+              showToast('Data imported successfully!');
             }
           }
         } catch (error) {
           console.error('Error parsing JSON file:', error);
-          alert('Failed to import data. Please check the file format.');
+          showToast('Failed to import data. Please check the file format.', 'error');
         } finally {
             if(fileInputRef.current) {
                 fileInputRef.current.value = '';

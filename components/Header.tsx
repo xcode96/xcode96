@@ -1,8 +1,8 @@
 import React from 'react';
-import { HomeIcon, ShieldCheckIcon, InformationCircleIcon, MenuIcon, LockIcon, LightBulbIcon } from './Icons';
+import { HomeIcon, ShieldCheckIcon, MenuIcon, LockIcon, LightBulbIcon } from './Icons';
 
 interface HeaderProps {
-  onNavigate: (view: 'home' | 'admin_login' | 'about') => void;
+  onNavigate: (view: 'home' | 'admin_login') => void;
   onMobileMenuClick: () => void;
   onSuggestToolClick: () => void;
 }
@@ -31,7 +31,6 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, onMobileMenuClick, o
         </div>
         
         <div className="flex items-center gap-4">
-           <NavItem icon={InformationCircleIcon} text="About" onClick={() => onNavigate('about')} />
            <button
               onClick={onSuggestToolClick}
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-2 rounded-md transition-colors text-sm"

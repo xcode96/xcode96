@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ShieldCheckIcon } from './Icons';
+import type { AdminUser } from '../types';
 
 interface AdminLoginProps {
   onLoginSuccess: () => void;
+  users: AdminUser[];
 }
 
-export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
+export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, users }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +15,10 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    if (username === 'admin' && password === 'dqadm') {
+    
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
       onLoginSuccess();
     } else {
       setError('Invalid username or password.');
@@ -75,11 +80,6 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess }) => {
               Sign In
             </button>
           </div>
-           <div className="text-center mt-6">
-              <a className="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-700" href="#">
-                Forgot Password?
-              </a>
-            </div>
         </form>
         <p className="text-center text-gray-500 text-xs">
           &copy;2024 XCODE96 Corp. All rights reserved.
