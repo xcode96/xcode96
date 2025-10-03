@@ -91,7 +91,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/yL7bE5v.png',
     category: 'Reconnaissance and OSINT',
     tagColor: 'red',
-    rating: 3,
+    rating: 4,
   },
   {
     id: 'swaggerjacker',
@@ -124,7 +124,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/tHqgG9R.png',
     category: 'Wireless Hacking',
     tagColor: 'green',
-    rating: 3,
+    rating: 4,
   },
    {
     id: 'red-teaming-llm',
@@ -168,7 +168,7 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/7wM6JtA.png',
     category: 'Social Engineering',
     tagColor: 'pink',
-    rating: 3,
+    rating: 4,
   },
   {
     id: 'payload-virus',
@@ -212,6 +212,6 @@ export const initialTools: Tool[] = [
     imageUrl: 'https://i.imgur.com/fA7n6O8.png',
     category: 'DevSecOps Tools',
     tagColor: 'yellow',
-    rating: 3,
+    rating: 4,
   },
 ];
