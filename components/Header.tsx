@@ -1,12 +1,13 @@
 import React from 'react';
-import { HomeIcon, ShieldCheckIcon, InformationCircleIcon, MenuIcon, LockIcon } from './Icons';
+import { HomeIcon, ShieldCheckIcon, InformationCircleIcon, MenuIcon, LockIcon, LightBulbIcon } from './Icons';
 
 interface HeaderProps {
   onNavigate: (view: 'home' | 'admin_login' | 'about') => void;
   onMobileMenuClick: () => void;
+  onSuggestToolClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onNavigate, onMobileMenuClick }) => {
+export const Header: React.FC<HeaderProps> = ({ onNavigate, onMobileMenuClick, onSuggestToolClick }) => {
   return (
     <header className="bg-white/80 backdrop-blur-sm sticky top-0 z-10 border-b border-gray-200">
       <div className="px-4 sm:px-6 py-3 flex items-center justify-between">
@@ -29,8 +30,15 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, onMobileMenuClick })
           <NavItem icon={ShieldCheckIcon} text="Admin Panel" onClick={() => onNavigate('admin_login')} />
         </div>
         
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
            <NavItem icon={InformationCircleIcon} text="About" onClick={() => onNavigate('about')} />
+           <button
+              onClick={onSuggestToolClick}
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-3 py-2 rounded-md transition-colors text-sm"
+            >
+              <LightBulbIcon className="w-5 h-5"/>
+              <span className="hidden sm:inline">Suggest a Tool</span>
+            </button>
         </div>
       </div>
     </header>

@@ -6,10 +6,9 @@ import { AdminLogin } from './components/AdminLogin';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Pagination } from './components/Pagination';
 import { AboutPage } from './components/AboutPage';
-import { Chatbot } from './components/Chatbot';
-import { GptIcon } from './components/Icons';
+import { SuggestionModal } from './components/SuggestionModal';
 import { initialTools, categories as baseCategories } from './constants';
-import type { Tool, AdminUser } from './types';
+import type { Tool, AdminUser, SuggestedTool } from './types';
 
 type View = 'home' | 'admin_login' | 'admin_dashboard' | 'about';
 
@@ -34,7 +33,7 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+  const [isSuggestionModalOpen, setIsSuggestionModalOpen] = useState(false);
   
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
     try {
@@ -60,6 +59,38 @@ const App: React.FC = () => {
       }
   });
 
+  const [suggestions, setSuggestions] = useState<SuggestedTool[]>(() => {
+    try {
+      const savedSuggestions = localStorage.getItem('toolSuggestions');
+      return savedSuggestions ? JSON.parse(savedSuggestions) : [];
+    } catch (error) {
+      console.error("Failed to parse suggestions from localStorage", error);
+      return [];
+    }
+  });
+
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+        const savedFavorites = localStorage.getItem('toolFavorites');
+        return savedFavorites ? JSON.parse(savedFavorites) : [];
+    } catch (error) {
+        console.error("Failed to parse favorites from localStorage", error);
+        return [];
+    }
+  });
+
+  const [ratings, setRatings] = useState<Record<string, number>>(() => {
+    try {
+        const savedRatings = localStorage.getItem('toolRatings');
+        return savedRatings ? JSON.parse(savedRatings) : {};
+    } catch (error) {
+        console.error("Failed to parse ratings from localStorage", error);
+        return {};
+    }
+  });
+
+  const [minRating, setMinRating] = useState<number>(0);
+
   // Effect to save data to localStorage whenever it changes
   useEffect(() => {
     try {
@@ -76,6 +107,30 @@ const App: React.FC = () => {
         console.error("Failed to save admin users to localStorage", error);
     }
   }, [adminUsers]);
+
+  useEffect(() => {
+    try {
+        localStorage.setItem('toolSuggestions', JSON.stringify(suggestions));
+    } catch (error) {
+        console.error("Failed to save suggestions to localStorage", error);
+    }
+  }, [suggestions]);
+
+  useEffect(() => {
+    try {
+        localStorage.setItem('toolFavorites', JSON.stringify(favorites));
+    } catch (error) {
+        console.error("Failed to save favorites to localStorage", error);
+    }
+  }, [favorites]);
+
+  useEffect(() => {
+    try {
+        localStorage.setItem('toolRatings', JSON.stringify(ratings));
+    } catch (error) {
+        console.error("Failed to save ratings to localStorage", error);
+    }
+  }, [ratings]);
 
   // Effect to handle hash changes (browser back/forward buttons)
   useEffect(() => {
@@ -134,13 +189,18 @@ const App: React.FC = () => {
         return acc;
     }, {} as Record<string, number>);
 
-    return baseCategories.map(category => ({
-        ...category,
-        count: category.name === 'All Categories' 
-            ? sourceTools.length 
-            : toolCountsByCategory[category.name] || 0,
-    }));
-  }, [tools]);
+    return baseCategories.map(category => {
+        let count = 0;
+        if (category.name === 'All Categories') {
+            count = sourceTools.length;
+        } else if (category.name === 'Favorites') {
+            count = favorites.length;
+        } else {
+            count = toolCountsByCategory[category.name] || 0;
+        }
+        return { ...category, count };
+    });
+  }, [tools, favorites]);
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
@@ -180,21 +240,77 @@ const App: React.FC = () => {
     setTools(prevTools => prevTools.filter(tool => tool.id !== toolId));
   };
 
-  const handleImportData = (data: { tools: Tool[]; adminUsers: AdminUser[] }) => {
+  const handleImportData = (data: { tools: Tool[]; adminUsers: AdminUser[], suggestions?: SuggestedTool[] }) => {
     if (data.tools) setTools(data.tools);
     if (data.adminUsers) setAdminUsers(data.adminUsers);
+    if (data.suggestions) setSuggestions(data.suggestions);
   };
   
+  const handleSuggestTool = (suggestionData: Omit<SuggestedTool, 'suggestionId' | 'status'>) => {
+      const newSuggestion: SuggestedTool = {
+        ...suggestionData,
+        suggestionId: `suggestion-${Date.now()}`,
+        status: 'pending',
+      };
+      setSuggestions(prev => [...prev, newSuggestion]);
+      setIsSuggestionModalOpen(false);
+      alert('Thank you for your suggestion! It has been submitted for review.');
+  };
+
+  const handleApproveSuggestion = (suggestionId: string) => {
+    const suggestion = suggestions.find(s => s.suggestionId === suggestionId);
+    if (suggestion) {
+        handleAddTool({
+            name: suggestion.name,
+            description: suggestion.description,
+            link: suggestion.link,
+            imageUrl: suggestion.imageUrl,
+            category: suggestion.category,
+            tagColor: suggestion.tagColor,
+            videoUrl: suggestion.videoUrl,
+        });
+        setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'approved' } : s));
+    }
+  };
+
+  const handleRejectSuggestion = (suggestionId: string) => {
+    setSuggestions(prev => prev.map(s => s.suggestionId === suggestionId ? { ...s, status: 'rejected' } : s));
+  };
+
+
+  const toggleFavorite = (toolId: string) => {
+    setFavorites(prev => 
+        prev.includes(toolId)
+            ? prev.filter(id => id !== toolId)
+            : [...prev, toolId]
+    );
+  };
+
+  const handleSetRating = (toolId: string, rating: number) => {
+    setRatings(prev => ({
+        ...prev,
+        [toolId]: rating,
+    }));
+  };
+
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory, searchTerm, minRating]);
 
   const fullyFilteredTools = useMemo(() => {
-    const sourceTools = tools;
+    let sourceTools = tools;
+
+    if (selectedCategory === 'Favorites') {
+        sourceTools = sourceTools.filter(tool => favorites.includes(tool.id));
+    }
+    
+    if (minRating > 0) {
+        sourceTools = sourceTools.filter(tool => (ratings[tool.id] || 0) >= minRating);
+    }
 
     const filteredByCategory = sourceTools
       .filter((tool) => {
-        if (selectedCategory === 'All Categories') return true;
+        if (selectedCategory === 'All Categories' || selectedCategory === 'Favorites') return true;
         return tool.category === selectedCategory;
       });
 
@@ -215,7 +331,7 @@ const App: React.FC = () => {
         if (!aNameMatch && bNameMatch) return 1;
         return 0;
     });
-  }, [selectedCategory, searchTerm, tools]);
+  }, [selectedCategory, searchTerm, tools, favorites, ratings, minRating]);
 
   const totalPages = Math.ceil(fullyFilteredTools.length / TOOLS_PER_PAGE);
 
@@ -235,6 +351,9 @@ const App: React.FC = () => {
             onAddUser={handleAddAdminUser} 
             onLogout={handleLogout}
             tools={tools}
+            suggestions={suggestions}
+            onApproveSuggestion={handleApproveSuggestion}
+            onRejectSuggestion={handleRejectSuggestion}
             categories={categories}
             onAddTool={handleAddTool}
             onEditTool={handleEditTool}
@@ -256,7 +375,14 @@ const App: React.FC = () => {
             {paginatedTools.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                 {paginatedTools.map((tool: Tool) => (
-                  <ToolCard key={tool.id} tool={tool} />
+                  <ToolCard 
+                    key={tool.id} 
+                    tool={tool}
+                    isFavorite={favorites.includes(tool.id)}
+                    onToggleFavorite={toggleFavorite}
+                    rating={ratings[tool.id]}
+                    onSetRating={handleSetRating}
+                  />
                 ))}
               </div>
             ) : (
@@ -294,24 +420,25 @@ const App: React.FC = () => {
         setSearchTerm={setSearchTerm}
         onNavigateHome={() => navigate('/')}
         isMobileOpen={isMobileSidebarOpen}
+        minRating={minRating}
+        setMinRating={setMinRating}
       />
       <div className="flex-1 flex flex-col lg:ml-64">
-        <Header onNavigate={handleNavigation} onMobileMenuClick={() => setIsMobileSidebarOpen(true)} />
+        <Header 
+          onNavigate={handleNavigation} 
+          onMobileMenuClick={() => setIsMobileSidebarOpen(true)}
+          onSuggestToolClick={() => setIsSuggestionModalOpen(true)}
+        />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-[rgb(224,232,255)]">
           {renderContent()}
         </main>
       </div>
-      <button 
-        onClick={() => setIsChatbotOpen(true)}
-        className="fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 bg-blue-600 hover:bg-blue-500 text-white z-20">
-        <GptIcon />
-      </button>
-      {isChatbotOpen && (
-        <Chatbot 
-          tools={tools} 
-          onClose={() => setIsChatbotOpen(false)} 
-        />
-      )}
+      <SuggestionModal
+        isOpen={isSuggestionModalOpen}
+        onClose={() => setIsSuggestionModalOpen(false)}
+        onSave={handleSuggestTool}
+        categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
+      />
     </div>
   );
 };

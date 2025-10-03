@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import type { AdminUser, Tool, Category } from '../types';
-import { UserPlusIcon, LogoutIcon, UserIcon, ToolsIcon, PencilIcon, TrashIcon, DownloadIcon, UploadIcon, PlusIcon } from './Icons';
+import React, { useState, useRef, useMemo } from 'react';
+import type { AdminUser, Tool, Category, SuggestedTool } from '../types';
+import { UserPlusIcon, LogoutIcon, UserIcon, ToolsIcon, PencilIcon, TrashIcon, DownloadIcon, UploadIcon, PlusIcon, InboxIcon, CheckCircleIcon, XCircleIcon } from './Icons';
 import { ToolFormModal } from './ToolFormModal';
 
 interface AdminDashboardProps {
@@ -8,17 +8,21 @@ interface AdminDashboardProps {
   onAddUser: (user: Omit<AdminUser, 'id' | 'createdAt'>) => void;
   onLogout: () => void;
   tools: Tool[];
+  suggestions: SuggestedTool[];
+  onApproveSuggestion: (suggestionId: string) => void;
+  onRejectSuggestion: (suggestionId: string) => void;
   categories: Category[];
   onAddTool: (tool: Omit<Tool, 'id' | 'author'>) => void;
   onEditTool: (tool: Tool) => void;
   onDeleteTool: (toolId: string) => void;
-  onImport: (data: { tools: Tool[]; adminUsers: AdminUser[] }) => void;
+  onImport: (data: { tools: Tool[]; adminUsers: AdminUser[]; suggestions?: SuggestedTool[] }) => void;
 }
 
-type ActiveTab = 'users' | 'tools';
+type ActiveTab = 'users' | 'tools' | 'suggestions';
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
-    users, onAddUser, onLogout, tools, categories, onAddTool, onEditTool, onDeleteTool, onImport
+    users, onAddUser, onLogout, tools, suggestions, onApproveSuggestion, onRejectSuggestion,
+    categories, onAddTool, onEditTool, onDeleteTool, onImport
 }) => {
   const [activeTab, setActiveTab] = useState<ActiveTab>('users');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -29,9 +33,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [password, setPassword] = useState('');
   const [role, setRole] = useState<'Admin' | 'Super Admin'>('Admin');
 
-  // Tool modal state
+  // Modal and workflow state
   const [isToolModalOpen, setIsToolModalOpen] = useState(false);
   const [editingTool, setEditingTool] = useState<Tool | null>(null);
+
+  const pendingSuggestionsCount = useMemo(() => suggestions.filter(s => s.status === 'pending').length, [suggestions]);
 
   const handleAddUserSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,11 +65,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 
   const handleSaveTool = (toolData: Omit<Tool, 'id' | 'author'> | Tool) => {
     if ('id' in toolData) {
-      onEditTool(toolData);
+      onEditTool(toolData as Tool);
     } else {
-      onAddTool(toolData);
+      onAddTool(toolData as Omit<Tool, 'id' | 'author'>);
     }
     setIsToolModalOpen(false);
+    setEditingTool(null);
   };
 
   const handleDeleteToolClick = (toolId: string) => {
@@ -76,6 +83,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     const data = {
         tools,
         adminUsers: users,
+        suggestions,
     };
     const jsonString = JSON.stringify(data, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
@@ -103,7 +111,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           const text = e.target?.result;
           if (typeof text === 'string') {
             const importedData = JSON.parse(text);
-            if (window.confirm('Are you sure you want to import this data? This will overwrite all existing tools and users.')) {
+            if (window.confirm('Are you sure you want to import this data? This will overwrite all existing data.')) {
               onImport(importedData);
               alert('Data imported successfully!');
             }
@@ -112,7 +120,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           console.error('Error parsing JSON file:', error);
           alert('Failed to import data. Please check the file format.');
         } finally {
-            // Reset file input to allow re-uploading the same file
             if(fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
@@ -121,7 +128,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       reader.readAsText(file);
     }
   };
-
 
   return (
     <div className="text-gray-700">
@@ -132,15 +138,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
         <div className="flex items-center gap-3">
             <input type="file" ref={fileInputRef} onChange={handleFileChange} accept=".json" className="hidden" />
-            <button onClick={handleImportClick} className="flex items-center gap-2 bg-white border border-blue-300 text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-md transition-colors text-sm">
+            <button onClick={handleImportClick} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm">
                 <UploadIcon className="w-5 h-5" /> Import
             </button>
-            <button onClick={handleExport} className="flex items-center gap-2 bg-white border border-green-300 text-green-600 hover:bg-green-50 font-semibold px-4 py-2 rounded-md transition-colors text-sm">
+            <button onClick={handleExport} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm">
                 <DownloadIcon className="w-5 h-5" /> Export
             </button>
             <button
               onClick={onLogout}
-              className="flex items-center gap-2 bg-white border border-red-300 text-red-600 hover:bg-red-50 font-semibold px-4 py-2 rounded-md transition-colors"
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm"
             >
               <LogoutIcon className="w-5 h-5" />
               <span>Logout</span>
@@ -153,12 +159,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <nav className="flex -mb-px space-x-6">
             <TabButton icon={UserIcon} label="User Management" isActive={activeTab === 'users'} onClick={() => setActiveTab('users')} />
             <TabButton icon={ToolsIcon} label="Tool Management" isActive={activeTab === 'tools'} onClick={() => setActiveTab('tools')} />
+            <TabButton icon={InboxIcon} label="Tool Suggestions" isActive={activeTab === 'suggestions'} onClick={() => setActiveTab('suggestions')} badgeCount={pendingSuggestionsCount} />
         </nav>
       </div>
 
       {/* CONTENT */}
       {activeTab === 'users' && <UserManagementPanel users={users} onAddUserSubmit={handleAddUserSubmit} username={username} setUsername={setUsername} email={email} setEmail={setEmail} password={password} setPassword={setPassword} role={role} setRole={setRole} />}
       {activeTab === 'tools' && <ToolManagementPanel tools={tools} onAddClick={handleOpenAddToolModal} onEditClick={handleOpenEditToolModal} onDeleteClick={handleDeleteToolClick} />}
+      {activeTab === 'suggestions' && <SuggestionManagementPanel suggestions={suggestions} onApprove={onApproveSuggestion} onReject={onRejectSuggestion} />}
     
       {isToolModalOpen && (
         <ToolFormModal 
@@ -166,7 +174,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             onClose={() => setIsToolModalOpen(false)}
             onSave={handleSaveTool}
             tool={editingTool}
-            categories={categories.filter(c => c.id !== 'all')}
+            categories={categories.filter(c => c.id !== 'all' && c.id !== 'favorites')}
         />
       )}
     </div>
@@ -174,10 +182,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
 };
 
 // Tab Button Component
-const TabButton = ({icon: Icon, label, isActive, onClick}) => (
-     <button onClick={onClick} className={`flex items-center gap-2 px-1 py-3 border-b-2 text-sm font-medium transition-colors ${isActive ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>
+const TabButton = ({icon: Icon, label, isActive, onClick, badgeCount = 0}) => (
+     <button onClick={onClick} className={`relative flex items-center gap-2 px-1 py-3 border-b-2 text-sm font-medium transition-colors ${isActive ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`}>
         <Icon className="w-5 h-5" />
         {label}
+        {badgeCount > 0 && (
+            <span className="absolute top-1 -right-3 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">{badgeCount}</span>
+        )}
     </button>
 )
 
@@ -186,7 +197,7 @@ const UserManagementPanel = ({users, onAddUserSubmit, username, setUsername, ema
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
         <div className="lg:col-span-1 bg-white border border-gray-200 rounded-xl p-6 h-fit">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <UserPlusIcon className="w-6 h-6 text-blue-500"/>
+                <UserPlusIcon className="w-6 h-6 text-green-500"/>
                 Create New Admin User
             </h2>
             <form onSubmit={onAddUserSubmit}>
@@ -209,7 +220,7 @@ const UserManagementPanel = ({users, onAddUserSubmit, username, setUsername, ema
                         <option>Super Admin</option>
                     </select>
                 </div>
-                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
                     Add User
                 </button>
             </form>
@@ -247,14 +258,14 @@ const UserManagementPanel = ({users, onAddUserSubmit, username, setUsername, ema
             </div>
         </div>
     </div>
-)
+);
 
 // Tool Management Panel Component
 const ToolManagementPanel = ({ tools, onAddClick, onEditClick, onDeleteClick }) => (
     <div className="bg-white border border-gray-200 rounded-xl animate-fade-in">
         <div className="p-6 flex justify-between items-center">
              <h2 className="text-xl font-bold text-gray-900">Manage Tools</h2>
-             <button onClick={onAddClick} className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm">
+             <button onClick={onAddClick} className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded-md transition-colors text-sm">
                 <PlusIcon className="w-5 h-5"/>
                 Add New Tool
              </button>
@@ -287,4 +298,65 @@ const ToolManagementPanel = ({ tools, onAddClick, onEditClick, onDeleteClick }) 
             </table>
         </div>
     </div>
-)
+);
+
+// Suggestion Management Panel Component
+const SuggestionManagementPanel = ({ suggestions, onApprove, onReject }) => {
+    const pendingSuggestions = suggestions.filter(s => s.status === 'pending');
+
+    const handleApproveClick = (suggestionId: string) => {
+        if (window.confirm('Are you sure you want to approve this tool suggestion? It will be added to the public list.')) {
+            onApprove(suggestionId);
+        }
+    };
+
+    const handleRejectClick = (suggestionId: string) => {
+        if (window.confirm('Are you sure you want to reject this tool suggestion?')) {
+            onReject(suggestionId);
+        }
+    };
+
+    return (
+        <div className="bg-white border border-gray-200 rounded-xl animate-fade-in">
+            <div className="p-6">
+                 <h2 className="text-xl font-bold text-gray-900">Pending Tool Suggestions</h2>
+                 {pendingSuggestions.length === 0 && <p className="text-gray-500 mt-2">There are no pending suggestions.</p>}
+            </div>
+            {pendingSuggestions.length > 0 && (
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm text-left text-gray-500">
+                        <thead className="text-xs text-gray-700 uppercase bg-slate-50">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">Tool Name</th>
+                                <th scope="col" className="px-6 py-3">Category</th>
+                                <th scope="col" className="px-6 py-3">Link</th>
+                                <th scope="col" className="px-6 py-3 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {pendingSuggestions.map(suggestion => (
+                                <tr key={suggestion.suggestionId} className="border-b border-gray-200 hover:bg-slate-50/50">
+                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{suggestion.name}</th>
+                                    <td className="px-6 py-4">{suggestion.category}</td>
+                                    <td className="px-6 py-4">
+                                        <a href={suggestion.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                                            View Link
+                                        </a>
+                                    </td>
+                                    <td className="px-6 py-4 text-right space-x-2">
+                                        <button onClick={() => handleApproveClick(suggestion.suggestionId)} className="flex items-center gap-1.5 bg-green-600 text-white hover:bg-green-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
+                                            <CheckCircleIcon className="w-4 h-4" /> Approve
+                                        </button>
+                                        <button onClick={() => handleRejectClick(suggestion.suggestionId)} className="flex items-center gap-1.5 bg-red-600 text-white hover:bg-red-700 font-semibold px-3 py-1.5 rounded-md transition-colors text-xs">
+                                            <XCircleIcon className="w-4 h-4" /> Reject
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+        </div>
+    )
+};

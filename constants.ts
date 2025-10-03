@@ -4,11 +4,12 @@ import {
   ThreatIntelIcon, AISecurityIcon, DFIRIcon, DetectionIcon, DevSecOpsIcon, 
   IoTSecurityIcon, MalwareAnalysisIcon, ExploitationFrameworksIcon, RedTeamOpsIcon,
   VulnerabilityScanningIcon, NetworkPenetrationIcon, SecurityAuditingIcon,
-  WirelessHackingIcon, C2Icon, MobileSecurityIcon, SocialEngineeringIcon, LockIcon
+  WirelessHackingIcon, C2Icon, MobileSecurityIcon, SocialEngineeringIcon, LockIcon, StarIcon
 } from './components/Icons';
 
 export const categories: Category[] = [
   { id: 'all', name: 'All Categories', count: 1253, icon: AllCategoriesIcon },
+  { id: 'favorites', name: 'Favorites', count: 0, icon: StarIcon },
   { id: 'recon', name: 'Reconnaissance and OSINT', count: 260, icon: ReconnaissanceIcon },
   { id: 'websec', name: 'Web Application Security', count: 118, icon: WebAppIcon },
   { id: 'postexploit', name: 'Post-Exploitation', count: 68, icon: PostExploitationIcon },
@@ -41,6 +42,7 @@ export const initialTools: Tool[] = [
     name: 'Mangle',
     description: 'A tool that manipulates aspects of compiled executables (exe or DLL). Mangle can remove known Indicators of Compromise (IoC) based strings and replace them with random characters, change the file by inflating the size to avoid EDRs, and can clone code-signing certs from legitimate files. In doing so, Mangle...',
     link: '#',
+    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     author: { name: 'João Paulo de Andrade Filho', avatarUrl: 'https://picsum.photos/seed/jp/32/32' },
     imageUrl: 'https://i.imgur.com/kYmO3P3.png',
     category: 'Persistence Techniques',

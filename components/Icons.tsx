@@ -12,19 +12,16 @@ export const StarIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   </svg>
 );
 
+export const StarFilledIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path fillRule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clipRule="evenodd" />
+  </svg>
+);
+
 export const LockIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
   </svg>
-);
-
-export const GptIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-   <path d="M12.55 3.1a1 1 0 0 0-1.1 0l-7.7 5.4a1 1 0 0 0 .55 1.8L8 9.5v5.5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9.5l3.75.8a1 1 0 0 0 .55-1.8Z"/>
-   <path d="M22 17.5a2.5 2.5 0 0 1-5 0V15a2.5 2.5 0 0 1 5 0Z"/>
-   <path d="M2 17.5a2.5 2.5 0 0 1 5 0V15a2.5 2.5 0 0 1-5 0Z"/>
-   <path d="M12 18v-5"/>
- </svg>
 );
 
 export const MenuIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
@@ -117,15 +114,59 @@ export const ChevronRightIcon = ({ className = 'w-6 h-6' }: { className?: string
     </svg>
 );
 
-export const SendIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+// Fix: Add missing GptIcon, SendIcon, and CloseIcon for Chatbot component
+// Chatbot Icons
+export const GptIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
     </svg>
 );
 
+export const SendIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+  </svg>
+);
+
 export const CloseIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+  </svg>
+);
+
+export const LightBulbIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.311a6.01 6.01 0 0 1-1.5.189m1.5-.189a6.01 6.01 0 0 0 1.5.189m-1.5-1.5a6.003 6.003 0 0 0-1.5-1.5m1.5 1.5a6.003 6.003 0 0 1-1.5-1.5m-3.75 7.478a12.06 12.06 0 0 0 4.5 0m-4.5-4.5a6.003 6.003 0 0 0-1.5 1.5m1.5-1.5a6.003 6.003 0 0 1 1.5 1.5m0 0V9a6 6 0 0 1 6-6v.75m-6 2.25V9a6 6 0 0 0 6 6v.75m-6-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM14.25 15h.008v.008H14.25V15Zm0 2.25h.008v.008H14.25v-.008ZM5.25 9.75A6.75 6.75 0 0 1 12 3a6.75 6.75 0 0 1 6.75 6.75v3.375c0 .621.504 1.125 1.125 1.125h.008c.621 0 1.125-.504 1.125-1.125V9.75A9 9 0 1 0 3 9.75v3.375c0 .621.504 1.125 1.125 1.125h.008c.621 0 1.125-.504 1.125-1.125V9.75Z" />
+    </svg>
+);
+
+export const InboxIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v10.5m0 0-3-3m3 3 3-3" />
+    </svg>
+);
+export const CheckCircleIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+);
+export const XCircleIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+);
+
+export const PlayCircleIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z" />
+  </svg>
+);
+
+export const EyeIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={className}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639l4.25-7.5a1.012 1.012 0 0 1 1.732 0l4.25 7.5a1.012 1.012 0 0 1 0 .639l-4.25 7.5a1.012 1.012 0 0 1-1.732 0l-4.25-7.5Z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
     </svg>
 );
 
@@ -248,7 +289,7 @@ export const BookIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M4 3.75A2.75 2.75 0 0 0 1.25 6.5v11A2.75 2.75 0 0 0 4 20.25h16A2.75 2.75 0 0 0 22.75 17.5V6.5A2.75 2.75 0 0 0 20 3.75H4Zm.908 12.44a.75.75 0 0 1 .834-.944h3.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Zm0-4.5a.75.75 0 0 1 .834-.944h6.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Zm0-4.5a.75.75 0 0 1 .834-.944h3.752a.75.75 0 0 1 0 1.5H5.742a.75.75 0 0 1-.834-.556Z"/></svg>
 );
 export const BugBountyIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M9.331 4.25a.75.75 0 0 1 1.054-.225 3.001 3.001 0 0 1 3.23 3.23.75.75 0 0 1-.225 1.054l-2.61 1.508a.75.75 0 0 0-.288.558v1.549a.75.75 0 0 0 1.5 0v-.636a.75.75 0 0 0-.07-.31l1.19-2.06a4.5 4.5 0 0 0-4.845-4.845L9.33 4.251Zm4.015 6.56a.75.75 0 0 0-1.054.225 3 3 0 0 0-3.23 3.23.75.75 0 0 0 .225 1.054l2.61 1.508a.75.75 0 0 1 .288.558v1.549a.75.75 0 0 1-1.5 0v-.636a.75.75 0 0 1 .07-.31l-1.19-2.06a4.5 4.5 0 0 1 4.845-4.845l.484.279ZM5.25 12a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75Zm9-3.75a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm0 7.5a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75ZM12 5.25a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V6a.75.75 0 0 0-.75-.75Zm-3.75 9a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Zm7.5 0a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Z" clipRule="evenodd" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M9.331 4.25a.75.75 0 0 1 1.054-.225 3.001 3.001 0 0 1 3.23 3.23.75.75 0 0 1-.225 1.054l-2.61 1.508a.75.75 0 0 0-.288.558v1.549a.75.75 0 0 0 1.5 0v-.636a.75.75 0 0 0-.07-.31l1.19-2.06a4.5 4.5 0 0 0-4.845-4.845L9.33 4.251Zm4.015 6.56a.75.75 0 0 0-1.054.225 3 3 0 0 0-3.23 3.23.75.75 0 0 0 .225 1.054l2.61 1.508a.75.75 0 0 1 .288.558v1.549a.75.75 0 0 1-1.5 0v-.636a.75.75 0 0 1 .07-.31l-1.19-2.06a4.5 4.5 0 0 1 4.845-4.845l.484.279ZM5.25 12a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75Zm9-3.75a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm0 7.5a.75.75 0 0 1 .75-.75h2.155a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm12 5.25a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V6a.75.75 0 0 0-.75-.75Zm-3.75 9a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Zm7.5 0a.75.75 0 0 0-.75.75v2.155a.75.75 0 0 0 1.5 0V15a.75.75 0 0 0-.75-.75Z" clipRule="evenodd" /></svg>
 );
 export const CTFsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M5.25 3A.75.75 0 0 0 4.5 3.75v16.5a.75.75 0 0 0 1.5 0V15h11.25a.75.75 0 0 1 0 1.5H6v3.75a.75.75 0 0 0 1.5 0V18h11.25a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 18.75 4.5H6.375a.75.75 0 0 1 0-1.5H18.75A3.75 3.75 0 0 1 22.5 6.75v8.5A3.75 3.75 0 0 1 18.75 19.5H5.25a.75.75 0 0 0 0 1.5H18a.75.75 0 0 1 0 1.5H5.25A2.25 2.25 0 0 1 3 18.75V3.75A.75.75 0 0 1 4.5 3H5.25Z" clipRule="evenodd" /></svg>
@@ -257,7 +298,7 @@ export const CertificationsIcon = ({ className = 'w-6 h-6' }: { className?: stri
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Z" clipRule="evenodd" /></svg>
 );
 export const EventsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clipRule="evenodd" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}><path fillRule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3-3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clipRule="evenodd" /></svg>
 );
 export const DownloadsIcon = ({ className = 'w-6 h-6' }: { className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>

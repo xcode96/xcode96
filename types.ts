@@ -15,6 +15,7 @@ export interface Tool {
   name: string;
   description: string;
   link: string;
+  videoUrl?: string;
   author: {
     name: string;
     avatarUrl: string;
@@ -22,6 +23,11 @@ export interface Tool {
   imageUrl: string;
   category: string;
   tagColor: TagColor;
+}
+
+export interface SuggestedTool extends Omit<Tool, 'id' | 'author'> {
+  suggestionId: string;
+  status: 'pending' | 'approved' | 'rejected';
 }
 
 export interface AdminUser {

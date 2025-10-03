@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Category } from '../types';
-import { SearchIcon, LockIcon } from './Icons';
+import { SearchIcon, LockIcon, StarIcon, StarFilledIcon } from './Icons';
 
 interface SidebarProps {
   categories: Category[];
@@ -10,7 +10,20 @@ interface SidebarProps {
   setSearchTerm: (term: string) => void;
   onNavigateHome: () => void;
   isMobileOpen: boolean;
+  minRating: number;
+  setMinRating: (rating: number) => void;
 }
+
+const getRatingColorClass = (rating: number): string => {
+    switch (rating) {
+        case 1: return 'text-red-500';
+        case 2: return 'text-yellow-400';
+        case 3: return 'text-green-500';
+        case 4: return 'text-blue-600';
+        case 5: return 'text-purple-600';
+        default: return 'text-gray-300';
+    }
+};
 
 export const Sidebar: React.FC<SidebarProps> = ({ 
   categories, 
@@ -20,7 +33,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   setSearchTerm,
   onNavigateHome,
   isMobileOpen,
+  minRating,
+  setMinRating,
 }) => {
+  
+  const ratingColorClass = getRatingColorClass(minRating);
+
   return (
     <aside className={`fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 flex flex-col p-4 overflow-y-auto z-40 transform transition-transform duration-300 ease-in-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
       <button onClick={onNavigateHome} className="flex items-center gap-3 mb-8 px-2 text-left">
@@ -71,6 +89,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
           ))}
         </ul>
       </nav>
+
+       <div className="pt-4 mt-auto border-t border-gray-200">
+        <h3 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Filter by Rating</h3>
+        <div className="px-3 flex items-center justify-between">
+            <div className="flex">
+                {[1, 2, 3, 4, 5].map(star => (
+                    <button key={star} onClick={() => setMinRating(minRating === star ? 0 : star)} className="p-0.5" aria-label={`Filter by ${star} stars and up`}>
+                        {star <= minRating ? <StarFilledIcon className={`w-6 h-6 ${ratingColorClass}`} /> : <StarIcon className="w-6 h-6 text-gray-300 hover:text-yellow-400"/>}
+                    </button>
+                ))}
+            </div>
+            {minRating > 0 && (
+                <button onClick={() => setMinRating(0)} className="text-xs text-blue-600 hover:underline font-semibold">Clear</button>
+            )}
+        </div>
+      </div>
     </aside>
   );
 };

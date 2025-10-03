@@ -16,10 +16,11 @@ export const ToolFormModal: React.FC<ToolFormModalProps> = ({ isOpen, onClose, o
         description: '',
         imageUrl: '',
         link: '',
+        videoUrl: '',
         category: categories[0]?.name || '',
         tagColor: 'blue' as TagColor,
     });
-    const [errors, setErrors] = useState<{ name?: string, description?: string }>({});
+    const [errors, setErrors] = useState<{ name?: string, description?: string, videoUrl?: string }>({});
 
     useEffect(() => {
         if (tool) {
@@ -28,6 +29,7 @@ export const ToolFormModal: React.FC<ToolFormModalProps> = ({ isOpen, onClose, o
                 description: tool.description,
                 imageUrl: tool.imageUrl,
                 link: tool.link,
+                videoUrl: tool.videoUrl || '',
                 category: tool.category,
                 tagColor: tool.tagColor,
             });
@@ -37,6 +39,7 @@ export const ToolFormModal: React.FC<ToolFormModalProps> = ({ isOpen, onClose, o
                 description: '',
                 imageUrl: '',
                 link: '',
+                videoUrl: '',
                 category: categories[0]?.name || '',
                 tagColor: 'blue' as TagColor,
             });
@@ -58,12 +61,19 @@ export const ToolFormModal: React.FC<ToolFormModalProps> = ({ isOpen, onClose, o
     };
 
     const validateForm = () => {
-        const newErrors: { name?: string, description?: string } = {};
+        const newErrors: { name?: string, description?: string, videoUrl?: string } = {};
         if (!formData.name.trim()) {
             newErrors.name = 'Tool name cannot be empty.';
         }
         if (!formData.description.trim()) {
             newErrors.description = 'Description cannot be empty.';
+        }
+        if (formData.videoUrl && !formData.videoUrl.startsWith('http')) {
+            try {
+                new URL(formData.videoUrl);
+            } catch (_) {
+                newErrors.videoUrl = 'Please enter a valid URL.';
+            }
         }
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -106,6 +116,12 @@ export const ToolFormModal: React.FC<ToolFormModalProps> = ({ isOpen, onClose, o
                          <div className="mb-4">
                             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="link">Tool Link</label>
                             <input value={formData.link} onChange={handleChange} name="link" className="bg-slate-50 border border-gray-300 rounded-lg w-full py-2 px-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500" id="link" type="url" required />
+                        </div>
+
+                         <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="videoUrl">Video URL (Optional)</label>
+                            <input value={formData.videoUrl} onChange={handleChange} name="videoUrl" className={`bg-slate-50 border ${errors.videoUrl ? 'border-red-500' : 'border-gray-300'} rounded-lg w-full py-2 px-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500`} id="videoUrl" type="url" />
+                             {errors.videoUrl && <p className="text-red-600 text-xs mt-1">{errors.videoUrl}</p>}
                         </div>
                         
                         <div className="grid grid-cols-2 gap-4">
