@@ -6,6 +6,7 @@ import { AdminLogin } from './components/AdminLogin';
 import { AdminDashboard } from './components/AdminDashboard';
 import { Pagination } from './components/Pagination';
 import { AboutPage } from './components/AboutPage';
+import { Chatbot } from './components/Chatbot';
 import { GptIcon } from './components/Icons';
 import { initialTools, categories as baseCategories } from './constants';
 import type { Tool, AdminUser } from './types';
@@ -33,12 +34,48 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   
-  const [adminUsers, setAdminUsers] = useState<AdminUser[]>([
-    { id: 1, username: 'admin', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
-  ]);
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
+    try {
+        const savedUsers = localStorage.getItem('adminUsers');
+        return savedUsers ? JSON.parse(savedUsers) : [
+            { id: 1, username: 'admin', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
+        ];
+    } catch (error) {
+        console.error("Failed to parse admin users from localStorage", error);
+        return [
+            { id: 1, username: 'admin', email: 'admin@xcode96.io', role: 'Super Admin', createdAt: new Date().toISOString() }
+        ];
+    }
+  });
 
-  const [tools, setTools] = useState<Tool[]>(initialTools);
+  const [tools, setTools] = useState<Tool[]>(() => {
+      try {
+        const savedTools = localStorage.getItem('tools');
+        return savedTools ? JSON.parse(savedTools) : initialTools;
+      } catch (error) {
+        console.error("Failed to parse tools from localStorage", error);
+        return initialTools;
+      }
+  });
+
+  // Effect to save data to localStorage whenever it changes
+  useEffect(() => {
+    try {
+        localStorage.setItem('tools', JSON.stringify(tools));
+    } catch (error) {
+        console.error("Failed to save tools to localStorage", error);
+    }
+  }, [tools]);
+  
+  useEffect(() => {
+    try {
+        localStorage.setItem('adminUsers', JSON.stringify(adminUsers));
+    } catch (error) {
+        console.error("Failed to save admin users to localStorage", error);
+    }
+  }, [adminUsers]);
 
   // Effect to handle hash changes (browser back/forward buttons)
   useEffect(() => {
@@ -260,13 +297,21 @@ const App: React.FC = () => {
       />
       <div className="flex-1 flex flex-col lg:ml-64">
         <Header onNavigate={handleNavigation} onMobileMenuClick={() => setIsMobileSidebarOpen(true)} />
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-slate-50">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-[rgb(224,232,255)]">
           {renderContent()}
         </main>
       </div>
-      <button className="fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 bg-blue-600 hover:bg-blue-500 text-white">
+      <button 
+        onClick={() => setIsChatbotOpen(true)}
+        className="fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 bg-blue-600 hover:bg-blue-500 text-white z-20">
         <GptIcon />
       </button>
+      {isChatbotOpen && (
+        <Chatbot 
+          tools={tools} 
+          onClose={() => setIsChatbotOpen(false)} 
+        />
+      )}
     </div>
   );
 };
