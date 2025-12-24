@@ -1,7 +1,6 @@
 
 ## Independent Security Researcher 🕵️‍♂️ | Offensive Security
 
----------------------------------------
 Independent security researcher with self-acquired knowledge in penetration testing, web application hacking, and Android pentesting. 
 Actively learning and experimenting with modern attack techniques and 
 security tools.
