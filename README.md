@@ -4,6 +4,7 @@
 ### Independent security researcher with self-acquired knowledge in penetration testing, web application hacking, and Android pentesting. 
 ### Actively learning and experimenting with modern attack techniques and 
 ### security tools.
+
  ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Technologist.png" alt="Technologist" width="30" height="30" /> My Recent Projects 
 
  1. [Mani Site ](https://xocode.info/)
