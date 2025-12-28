@@ -16,4 +16,9 @@
  8. [Audit Checklist](https://ch.xocode.info/)
  9. [Prompt Hackiing](https://prompt.xocode.info/)
  10. [Privacy Script MAC, Linux, Windows ](https://privacy.xocode.info/)
-11.
+ 11. [Usefull Links](https://x.xocode.info/)
+ 12. [CISSP Exam](https://cissp.xocode.info/)
+ 13. [Networking Commands](https://n.xocode.info/)
+ 14. [ISO](https://iso.xocode.info/)
+ 15. [Hacking Repo](https://96.xocode.info/) 
+    
