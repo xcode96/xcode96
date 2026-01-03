@@ -6,7 +6,7 @@
 
  ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Technologist.png" alt="Technologist" width="30" height="30" /> My Recent Projects 
 
- 1. [Main Site](https://xocode.info)
+ 1. [Main Site](https://www.xocode.info)
  3. [Security tools](https://tools.xocode.info/)
  4. [Self Learning](https://learn.xocode.info/)
  5. [ Google vulnerabilities](https://bugscout.xocode.info/)
