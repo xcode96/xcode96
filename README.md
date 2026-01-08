@@ -1,4 +1,3 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&pause=1000&width=600&lines=Hey%2C+What's+Going+On%3F+;Hello+from+Xcoder+🕵️‍♂️;Independent+Security+Researcher;Offensive+Security+%7C+Pentesting+%7C+Research)](https://git.io/typing-svg)
 
 <img src="https://backiee.com/static/wallpapers/1000x563/393887.jpg" alt="header image"/>
 
@@ -10,7 +9,7 @@
 
 ---
 
-### 👋 Hi, I’m Xcoder (Manim Bhavarathi)
+### 👋 Hi, I’m Xcoder (Manibharahi P)
 
 Independent Security Researcher 🕵️‍♂️ | Offensive Security  
 Self-taught penetration tester focused on **real-world web application attacks**, **Android pentesting**, and **security research**.
