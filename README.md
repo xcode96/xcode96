@@ -5,8 +5,6 @@
 <a href="https://www.xocode.info"><img height="25" src="https://img.shields.io/badge/Website-%23354230.svg?&style=for-the-badge&logo=github&logoColor=white"></a>&nbsp;&nbsp;
 </p>
 
----
-
 ### 👋 Hi, I’m ↄxCODE96---•
 
 Independent Security Researcher 🕵️‍♂️ | Offensive Security  
