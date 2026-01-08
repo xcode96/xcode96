@@ -1,5 +1,4 @@
 
-<img src="https://backiee.com/static/wallpapers/1000x563/393887.jpg" alt="header image"/>
 
 <p align='center'> 
 <a href="https://www.linkedin.com/"><img height="25" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a>&nbsp;&nbsp;
@@ -16,7 +15,8 @@ Self-taught penetration tester focused on **real-world web application attacks**
 
 Always learning, always experimenting — breaking things to understand how to secure them 🔐
 
-<img align="right" src="https://github.com/user-attachments/assets/3024e5bd-576e-4f84-8282-1db9041233d1" width="250" />
+<img align="right" src="<img width="1530" height="866" alt="image" src="https://github.com/user-attachments/assets/669658a1-67fa-4b0a-98d4-7fa836869432" />
+" width="250" />
 
 ---
 
