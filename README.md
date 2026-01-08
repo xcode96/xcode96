@@ -15,8 +15,8 @@ Self-taught penetration tester focused on **real-world web application attacks**
 
 Always learning, always experimenting — breaking things to understand how to secure them 🔐
 
-<img align="right" src="<img width="1530" height="866" alt="image" src="https://github.com/user-attachments/assets/669658a1-67fa-4b0a-98d4-7fa836869432" />
-" width="250" />
+<img align="right" src="https://github.com/user-attachments/assets/5afcdb7b-f7a9-43df-bbf0-bdbd992b0466" width="250" />
+
 
 ---
 
