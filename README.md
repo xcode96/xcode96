@@ -50,14 +50,4 @@ Always learning, always experimenting — breaking things to understand how to s
 
 ---
 
-### 🧠 Areas of Interest
-
-- Web Application Pentesting (XSS, IDOR, LFI, RCE, Auth Bypass)
-- Android Application Security
-- Red Teaming & Exploitation
-- SOC & Blue Team Fundamentals
-- Security Automation & Scripting
-- Policy, Audit & Compliance
-
----
 
