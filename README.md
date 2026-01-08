@@ -21,7 +21,7 @@ Always learning, always experimenting — breaking things to understand how to s
 ---
 
 ### 🛠️ What I’m Working On
-
+📢  Working on my latest project: **[Security Tools](https://tools.xocode.info)** </br>
 🔐 Building **hands-on security platforms, tools, and labs** for learning and research  
 🧠 Exploring **modern attack techniques**, SOC awareness, and automation  
 ⚙️ Creating **practical scripts, checklists, and guides** for offensive & defensive security
@@ -61,7 +61,4 @@ Always learning, always experimenting — breaking things to understand how to s
 - Policy, Audit & Compliance
 
 ---
-
-📢 **Open to collaboration, research discussions, and learning opportunities**  
-⭐ If my work helps you, feel free to support it!
 
