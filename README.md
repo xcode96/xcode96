@@ -1,25 +1,68 @@
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&pause=1000&width=600&lines=Hey%2C+What's+Going+On%3F+;Hello+from+Xcoder+🕵️‍♂️;Independent+Security+Researcher;Offensive+Security+%7C+Pentesting+%7C+Research)](https://git.io/typing-svg)
 
-# Independent Security Researcher 🕵️‍♂️ | Offensive Security
+<img src="https://backiee.com/static/wallpapers/1000x563/393887.jpg" alt="header image"/>
 
-### Independent security researcher with self-acquired knowledge in penetration testing, web application hacking and Android pentesting. 
-### Actively learning and experimenting with modern attack techniques and security tools.
+<p align='center'> 
+<a href="https://www.linkedin.com/"><img height="25" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a>&nbsp;&nbsp;
+<a href="https://x.com/"><img height="25" src="https://img.shields.io/badge/Twitter-%231DA1F1.svg?&style=for-the-badge&logo=X&logoColor=white"></a>&nbsp;&nbsp;
+<a href="https://www.xocode.info"><img height="25" src="https://img.shields.io/badge/Website-%23354230.svg?&style=for-the-badge&logo=github&logoColor=white"></a>&nbsp;&nbsp;
+</p>
 
- ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Technologist.png" alt="Technologist" width="30" height="30" /> My Recent Projects 
+---
 
- 1. [Main Site](https://www.xocode.info)
- 3. [Security tools](https://tools.xocode.info/)
- 4. [Self Learning](https://learn.xocode.info/)
- 5. [ Google vulnerabilities](https://bugscout.xocode.info/)
- 6. [SOC Guide](https://soc.xocode.info/)
- 7. [IT Policy](https://policy.xocode.info/)
- 8. [Employee IT Security Test](https://xpolicy.xocode.info/)
- 9. [Powershell valut](https://ps.xocode.info/)
- 10. [Audit Checklist](https://ch.xocode.info/)
- 11. [Prompt Hackiing](https://prompt.xocode.info/)
- 12. [Privacy Script MAC, Linux, Windows ](https://privacy.xocode.info/)
- 13. [Usefull Links](https://x.xocode.info/)
- 14. [CISSP Exam](https://cissp.xocode.info/)
- 15. [Networking Commands](https://n.xocode.info/)
- 16. [ISO](https://iso.xocode.info/)
- 17. [Hacking Repo](https://96.xocode.info/) 
+### 👋 Hi, I’m Xcoder (Manim Bhavarathi)
+
+Independent Security Researcher 🕵️‍♂️ | Offensive Security  
+Self-taught penetration tester focused on **real-world web application attacks**, **Android pentesting**, and **security research**.
+
+Always learning, always experimenting — breaking things to understand how to secure them 🔐
+
+<img align="right" src="https://github.com/user-attachments/assets/3024e5bd-576e-4f84-8282-1db9041233d1" width="250" />
+
+---
+
+### 🛠️ What I’m Working On
+
+🔐 Building **hands-on security platforms, tools, and labs** for learning and research  
+🧠 Exploring **modern attack techniques**, SOC awareness, and automation  
+⚙️ Creating **practical scripts, checklists, and guides** for offensive & defensive security
+
+---
+
+### 🚀 Highlighted Projects & Platforms
+
+| 📦 Project | 🛠️ Description |
+|---|---|
+| **[Main Site](https://www.xocode.info)** | Personal cybersecurity hub & research portfolio |
+| **[Security Tools](https://tools.xocode.info/)** | Offensive & defensive security tools |
+| **[Self Learning](https://learn.xocode.info/)** | Hands-on cybersecurity learning platform |
+| **[Google Vulnerabilities](https://bugscout.xocode.info/)** | Research & vulnerability analysis |
+| **[SOC Guide](https://soc.xocode.info/)** | SOC fundamentals & blue-team awareness |
+| **[IT Policy](https://policy.xocode.info/)** | Security policies & governance references |
+| **[Employee Security Test](https://xpolicy.xocode.info/)** | Security awareness testing platform |
+| **[PowerShell Vault](https://ps.xocode.info/)** | PowerShell scripts for security & automation |
+| **[Audit Checklist](https://ch.xocode.info/)** | Security audit & compliance checklists |
+| **[Prompt Hacking](https://prompt.xocode.info/)** | AI prompt security & exploitation research |
+| **[Privacy Scripts](https://privacy.xocode.info/)** | Privacy & hardening scripts (Windows/Linux/macOS) |
+| **[Useful Links](https://x.xocode.info/)** | Curated cybersecurity resources |
+| **[CISSP Guide](https://cissp.xocode.info/)** | CISSP exam preparation materials |
+| **[Networking Commands](https://n.xocode.info/)** | Networking reference & cheat sheets |
+| **[ISO Standards](https://iso.xocode.info/)** | ISO security standards overview |
+| **[Hacking Repo](https://96.xocode.info/)** | Pentesting notes, labs & research |
+
+---
+
+### 🧠 Areas of Interest
+
+- Web Application Pentesting (XSS, IDOR, LFI, RCE, Auth Bypass)
+- Android Application Security
+- Red Teaming & Exploitation
+- SOC & Blue Team Fundamentals
+- Security Automation & Scripting
+- Policy, Audit & Compliance
+
+---
+
+📢 **Open to collaboration, research discussions, and learning opportunities**  
+⭐ If my work helps you, feel free to support it!
 
