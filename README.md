@@ -17,7 +17,7 @@ Always learning, always experimenting — breaking things to understand how to s
 ---
 
 ### 🛠️ What I’m Working On
-📢  Working on my latest project: **[Security Tools](https://tools.xocode.info)** </br>
+📢  Working on my latest project: **[Security Tools](https://tools.xocode.info)** **[Soc Guide](https://soc.xocode.info)** **[Hacking Repo](https://96.xocode.info/)** | </br>
 🔐 Building **hands-on security platforms, tools, and labs** for learning and research  
 🧠 Exploring **modern attack techniques**, SOC awareness, and automation  
 ⚙️ Creating **practical scripts, checklists, and guides** for offensive & defensive security
