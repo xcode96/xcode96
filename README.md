@@ -7,7 +7,7 @@
 
 ### 👋 Hi, I’m ↄxCODE96---•
 
-##### Independent Security Researcher 🕵️‍♂️ | Offensive Security  
+####  Independent Security Researcher 🕵️‍♂️ | Offensive Security  
 Independent security researcher with self-acquired knowledge in penetration testing, web application hacking and Android pentesting.
 Always learning, always experimenting — breaking things to understand how to secure them 🔐
 
