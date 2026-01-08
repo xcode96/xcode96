@@ -7,7 +7,7 @@
 
 ---
 
-### 👋 Hi, I’m Xcoder (Manibharahi P)
+### 👋 Hi, I’m Xcoder (Manibharathi P)
 
 Independent Security Researcher 🕵️‍♂️ | Offensive Security  
 Self-taught penetration tester focused on **real-world web application attacks**, **Android pentesting**, and **security research**.
