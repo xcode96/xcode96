@@ -37,7 +37,7 @@ Always learning, always experimenting — breaking things to understand how to s
 | **[Employee Security Test](https://xpolicy.xocode.info/)** | Security awareness testing platform |
 | **[PowerShell Vault](https://ps.xocode.info/)** | PowerShell scripts for security & automation |
 | **[Audit Checklist](https://ch.xocode.info/)** | Security audit & compliance checklists |
-| **[Prompt Hacking](https://prompt.xocode.info/)** | AI prompt security & exploitation research |
+| **[Prompt Hacking](https://pe.xocode.info/)** | AI prompt security & exploitation research |
 | **[Privacy Scripts](https://privacy.xocode.info/)** | Privacy & hardening scripts (Windows/Linux/macOS) |
 | **[Useful Links](https://x.xocode.info/)** | Curated cybersecurity resources |
 | **[CISSP Guide](https://cissp.xocode.info/)** | CISSP exam preparation materials |
