@@ -44,7 +44,7 @@ Always learning, always experimenting — breaking things to understand how to s
 | **[Networking Commands](https://n.xocode.info/)** | Networking reference & cheat sheets |
 | **[ISO Standards](https://iso.xocode.info/)** | ISO security standards overview |
 | **[Hacking Repo](https://96.xocode.info/)** | Pentesting notes, labs & research |
-| **[Sentinel Automation](https://kql.xocode.info/)** | Eniter It Policy & Must Know everyone |
+| **[Sentinel Automation](https://kql.xocode.info/)** | Kusto Query Language (KQL) |
 
 
 ---
