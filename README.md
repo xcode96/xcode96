@@ -45,6 +45,7 @@ Always learning, always experimenting — breaking things to understand how to s
 | **[ISO Standards](https://iso.xocode.info/)** | ISO security standards overview |
 | **[Hacking Repo](https://96.xocode.info/)** | Pentesting notes, labs & research |
 | **[Sentinel Automation](https://kql.xocode.info/)** | Kusto Query Language (KQL) |
+| **[XDR/XSIAM Query](https://cortex-xdr-xsiam.vercel.app/)** | XQL (XDR Query Language) (xQL) |
 
 
 ---
