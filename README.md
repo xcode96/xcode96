@@ -32,7 +32,7 @@ Always learning, always experimenting — breaking things to understand how to s
 | **[Security Tools](https://new-securitytools.vercel.app/)** | Offensive & defensive security tools |
 | **[Self Learning](https://ceh-gilt.vercel.app/)** | Hands-on cybersecurity learning platform |
 | **[Google Vulnerabilities](https://google-dorks-olive.vercel.app/)** | Research & vulnerability analysis |
-| **[SOC Guide](https://soc.xocode.info/)** | SOC fundamentals & blue-team awareness |
+| **[SOC Guide](https://soc-nine.vercel.app/)** | SOC fundamentals & blue-team awareness |
 | **[IT Policy](https://all-itpolicyupdateing.vercel.app/)** | Security policies & governance references |
 | **[Employee Security Test](https://xpolicy.xocode.info/)** | Security awareness testing platform |
 | **[PowerShell Vault](https://xcode96.github.io/Powershell/)** | PowerShell scripts for security & automation |
