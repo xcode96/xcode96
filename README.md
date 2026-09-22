@@ -29,22 +29,22 @@ Always learning, always experimenting — breaking things to understand how to s
 | 📦 Project | 🛠️ Description |
 |---|---|
 | **[Main Site](https://www.xocode.info)** | Personal cybersecurity hub & research portfolio |
-| **[Security Tools](https://tools.xocode.info/)** | Offensive & defensive security tools |
-| **[Self Learning](https://learn.xocode.info/)** | Hands-on cybersecurity learning platform |
-| **[Google Vulnerabilities](https://bugscout.xocode.info/)** | Research & vulnerability analysis |
+| **[Security Tools](https://new-securitytools.vercel.app/)** | Offensive & defensive security tools |
+| **[Self Learning](https://ceh-gilt.vercel.app/)** | Hands-on cybersecurity learning platform |
+| **[Google Vulnerabilities](https://google-dorks-olive.vercel.app/)** | Research & vulnerability analysis |
 | **[SOC Guide](https://soc.xocode.info/)** | SOC fundamentals & blue-team awareness |
-| **[IT Policy](https://policy.xocode.info/)** | Security policies & governance references |
+| **[IT Policy](https://all-itpolicyupdateing.vercel.app/)** | Security policies & governance references |
 | **[Employee Security Test](https://xpolicy.xocode.info/)** | Security awareness testing platform |
 | **[PowerShell Vault](https://ps.xocode.info/)** | PowerShell scripts for security & automation |
 | **[Audit Checklist](https://ch.xocode.info/)** | Security audit & compliance checklists |
 | **[Prompt Hacking](https://prompt.xocode.info/)** | AI prompt security & exploitation research |
-| **[Privacy Scripts](https://privacy.xocode.info/)** | Privacy & hardening scripts (Windows/Linux/macOS) |
+| **[Privacy Scripts](https://privacy-guard-pied.vercel.app/)** | Privacy & hardening scripts (Windows/Linux/macOS) |
 | **[Useful Links](https://x.xocode.info/)** | Curated cybersecurity resources |
 | **[CISSP Guide](https://cissp.xocode.info/)** | CISSP exam preparation materials |
 | **[Networking Commands](https://n.xocode.info/)** | Networking reference & cheat sheets |
 | **[ISO Standards](https://iso.xocode.info/)** | ISO security standards overview |
-| **[Hacking Repo](https://96.xocode.info/)** | Pentesting notes, labs & research |
-| **[Sentinel Automation](https://kql.xocode.info/)** | Kusto Query Language (KQL) |
+| **[Hacking Repo](https://security-usefull-source.vercel.app/)** | Pentesting notes, labs & research |
+| **[Sentinel Automation](https://microsoft-sentinel-kql.vercel.app/)** | Kusto Query Language (KQL) |
 | **[XDR/XSIAM Query](https://cortex-xdr-xsiam.vercel.app/)** | XQL (XDR Query Language) (xQL) |....
 
 
