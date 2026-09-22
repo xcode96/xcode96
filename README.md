@@ -35,7 +35,7 @@ Always learning, always experimenting — breaking things to understand how to s
 | **[SOC Guide](https://soc.xocode.info/)** | SOC fundamentals & blue-team awareness |
 | **[IT Policy](https://all-itpolicyupdateing.vercel.app/)** | Security policies & governance references |
 | **[Employee Security Test](https://xpolicy.xocode.info/)** | Security awareness testing platform |
-| **[PowerShell Vault](https://ps.xocode.info/)** | PowerShell scripts for security & automation |
+| **[PowerShell Vault](https://xcode96.github.io/Powershell/)** | PowerShell scripts for security & automation |
 | **[Audit Checklist](https://ch.xocode.info/)** | Security audit & compliance checklists |
 | **[Prompt Hacking](https://prompt.xocode.info/)** | AI prompt security & exploitation research |
 | **[Privacy Scripts](https://privacy-guard-pied.vercel.app/)** | Privacy & hardening scripts (Windows/Linux/macOS) |
